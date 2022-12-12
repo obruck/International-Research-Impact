@@ -1,7 +1,15 @@
 rm(list=ls())
 
+
+# NB! THESE NEED TO BE FIXED TO MAKE THE SCRIPT WORK
+google_api = "blabla"              # replace blabla with your Google API key to query, this is needed in lines 571-606
+genderizeio_api = "blabla"         # replace blabla with your Genderize API key if you need one, see line 1150
+
+
+########################################## Working directory and create project directory tree ##########################################
+
+
 # Set working directory
-# Change working directory
 ## Get current file location
 getCurrentFileLocation <-  function()
 {
@@ -231,7 +239,7 @@ options(scipen = 999) ## To disable scientific notation
 ########################################## API ##########################################
 
 
-register_google(key="AIzaSyDv5Iu2OGBGsJ4b4YMog11QmHk4WSVdunM", write = TRUE)
+register_google(key=key, write = TRUE)
 
 
 ########################################## DATA ##########################################
@@ -245,7 +253,8 @@ world <- map_data("world")
 data(world.cities)
 
 # Citations
-df <- readxl::read_xlsx("International-Research-Impact/data/data.xlsx")
+df <- readxl::read_xlsx("International-Research-Impact/data/data.xlsx") %>%
+  janitor::clean_names()
 
 
 ########################################## PROCESS DATA (GENERAL) ##########################################
@@ -407,7 +416,6 @@ world_pop <- read.csv("data/world_population.csv") %>%
   dplyr::mutate(country.etc = gsub("United States", "USA",
                                    gsub("United Kingdom", "UK",
                                         gsub("Czechia", "Czech Republic",
-                                             # gsub("Korea", "South Korea",
                                              gsub("Russian Federation", "Russia",
                                                   gsub("Serbia", "Serbia and Montenegro",
                                                        gsub("Slovak Republic", "Slovakia",
@@ -420,7 +428,6 @@ world_pop <- read.csv("data/world_population.csv") %>%
                                                                                           gsub("Cabo Verde", "Cape Verde",
                                                                                                gsub("Cote d'Ivoire", "Ivory Coast",
                                                                                                     gsub("North Macedonia", "Macedonia",
-                                                                                                         # gsub("Korea South", "South Korea",
                                                                                                          gsub(",[[:print:]]*", "",
                                                                                                               gsub("Korea, Dem. People's Rep.", "North Korea", 
                                                                                                                    gsub("Korea, Rep.", "South Korea", country.etc)))))))))))))))))))
@@ -559,7 +566,6 @@ df_long_city = df %>%
                    n_of_articles = sum(n_of_articles)) %>%
   ungroup() %>%
   dplyr::filter(nchar(name) > 20)
-
 
 # Geolocate round 1 = each city by their address and Google API
 df_long_city <- df_long_city %>%
@@ -1138,7 +1144,8 @@ givenNames0 <- readRDS("data/combined_names.rds")
 ## Keep only unique new names
 firstnames <- firstnames[!firstnames %in% givenNames0$probability]
 ## Analyze new names
-givenNames = findGivenNames(firstnames, progress = FALSE, ssl.verifypeer = FALSE, textPrepare = FALSE, apikey = "836042cbb6d757723eee9316e3046780") %>%
+### To run more queries, purchase the Genderize.io API and add ", apikey = genderizeio_api" after "textPrepare = FALSE"
+givenNames = findGivenNames(firstnames, progress = FALSE, ssl.verifypeer = FALSE, textPrepare = FALSE) %>%   
   dplyr::distinct(probability, gender, count, .keep_all=FALSE)
 ## Combine with previously analyzed names
 givenNames1 <- rbind(givenNames0, givenNames)

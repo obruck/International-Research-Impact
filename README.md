@@ -8,7 +8,11 @@ These codes will help you reproduce all plots and statistical analyses of two pu
 
 ## DATA
 ### Web of Science
-Certain data included herein are derived from Clarivate Web of Science. © Copyright Clarivate 2022. All rights reserved. The complete data cannot be shared based on Clarivate's policy, but a 100-row snapshot including publication metadata of the author names, page length of the article, address of the corresponding author, total number of citations, etc. is available in `./data/data_example_100rows.xlsx`. In addition, image examples of the document search process and queries are provided in `./WebOfScience/`. If you want to try the script for your own query (for example if you want to analyze other journals or other publication years, replace the `./data/data.xlsx` with your new data file.
+Certain data included herein are derived from Clarivate Web of Science. © Copyright Clarivate 2022. All rights reserved.  
+
+The complete data cannot be shared based on Clarivate's policy, but a 100-row snapshot including publication metadata of the author names, page length of the article, address of the corresponding author, total number of citations, etc. is available in `./data/data_example_100rows.xlsx`.  
+
+Image examples of the Web of Science document search process and queries are provided in `./WebOfScience/`. If you want to try the script for your own query (for example if you want to analyze other journals or other publication years), the easiest would be to replace the `./data/data.xlsx` with your new data file.
 
 ### Population data
 National population data were downloaded from the [World Bank database](https://data.worldbank.org/indicator/SP.POP.TOTL), and municipal data from the world.cities dataset of the utils R package.
