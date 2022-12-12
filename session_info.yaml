@@ -1,0 +1,1408 @@
+platform:
+  version: R version 3.5.1 (2018-07-02)
+  os: macOS  10.14.2
+  system: x86_64, darwin15.6.0
+  ui: RStudio
+  language: (EN)
+  collate: en_US.UTF-8
+  ctype: en_US.UTF-8
+  tz: Europe/Helsinki
+  date: '2022-12-11'
+packages:
+  package:
+  - abind
+  - assertthat
+  - backports
+  - base64enc
+  - bitops
+  - broom
+  - callr
+  - car
+  - carData
+  - cellranger
+  - class
+  - classInt
+  - cli
+  - cluster
+  - colorspace
+  - countrycode
+  - crayon
+  - curl
+  - data.table
+  - DBI
+  - dendextend
+  - DEoptimR
+  - desc
+  - devtools
+  - digest
+  - diptest
+  - dplyr
+  - e1071
+  - ellipsis
+  - fansi
+  - fastDummies
+  - flexmix
+  - forcats
+  - foreign
+  - fpc
+  - fs
+  - genderizeR
+  - generics
+  - ggdendro
+  - ggmap
+  - ggplot2
+  - ggpubr
+  - ggrepel
+  - ggsignif
+  - glue
+  - gridExtra
+  - gtable
+  - haven
+  - hms
+  - httr
+  - janitor
+  - jpeg
+  - jsonlite
+  - kernlab
+  - KernSmooth
+  - labeling
+  - lattice
+  - lazyeval
+  - lifecycle
+  - lubridate
+  - lwgeom
+  - magrittr
+  - maps
+  - MASS
+  - Matrix
+  - mclust
+  - memoise
+  - modelr
+  - modeltools
+  - munsell
+  - mvtnorm
+  - nlme
+  - nnet
+  - openxlsx
+  - pillar
+  - pkgbuild
+  - pkgconfig
+  - pkgload
+  - plyr
+  - png
+  - prabclus
+  - prettyunits
+  - processx
+  - ps
+  - purrr
+  - R6
+  - RColorBrewer
+  - Rcpp
+  - readr
+  - readxl
+  - remotes
+  - reshape2
+  - RgoogleMaps
+  - rio
+  - rjson
+  - rlang
+  - robustbase
+  - rprojroot
+  - rscopus
+  - rstatix
+  - rstudioapi
+  - rvest
+  - scales
+  - sessioninfo
+  - sf
+  - sp
+  - stringi
+  - stringr
+  - survival
+  - tibble
+  - tidyr
+  - tidyselect
+  - tidyverse
+  - trimcluster
+  - units
+  - usethis
+  - utf8
+  - vctrs
+  - viridis
+  - viridisLite
+  - whisker
+  - withr
+  - writexl
+  - xml2
+  - yaml
+  - zip
+  ondiskversion:
+  - 1.4.5
+  - 0.2.1
+  - 1.1.5
+  - 0.1.3
+  - 1.0.6
+  - 0.5.2
+  - 3.0.0
+  - 3.0.2
+  - 3.0.2
+  - 1.1.0
+  - 7.3.14
+  - 0.4.2
+  - 3.4.1
+  - 2.0.7.1
+  - 1.4.1
+  - 1.4.0
+  - 1.3.4
+  - 4.3.3
+  - 1.14.2
+  - 1.1.0
+  - 1.9.0
+  - 1.0.8
+  - 1.2.0
+  - 2.0.1
+  - 0.6.25
+  - 0.75.7
+  - 1.0.10
+  - 1.7.3
+  - 0.3.2
+  - 1.0.3
+  - 1.6.1
+  - 2.3.14
+  - 0.3.0
+  - 0.8.71
+  - 2.1.11.1
+  - 1.4.1
+  - 2.1.1
+  - 0.1.3
+  - 0.1.20
+  - 3.0.0
+  - 3.2.1
+  - 0.2.5.999
+  - 0.8.1
+  - 0.4.0
+  - 1.6.2
+  - '2.3'
+  - 0.3.0
+  - 2.0.0
+  - 0.5.2
+  - 1.4.4
+  - 1.1.1
+  - 0.1.8
+  - 1.8.3
+  - 0.9.27
+  - 2.23.15
+  - '0.3'
+  - 0.20.38
+  - 0.2.2
+  - 1.0.3
+  - 1.7.4
+  - 0.2.1
+  - 2.0.3
+  - 3.3.0
+  - 7.3.51.1
+  - 1.2.15
+  - 5.4.2
+  - 1.1.0
+  - 0.1.2
+  - 0.2.22
+  - 0.5.0
+  - 1.0.8
+  - 3.1.137
+  - 7.3.12
+  - 4.1.0
+  - 1.8.1
+  - 1.0.2
+  - 2.0.3
+  - 1.0.2
+  - 1.8.8
+  - 0.1.7
+  - 2.2.6
+  - 1.0.2
+  - 3.4.2
+  - 1.3.2
+  - 0.3.5
+  - 2.5.1
+  - 1.1.2
+  - 1.0.9
+  - 1.3.1
+  - 1.4.1
+  - 2.1.0
+  - 1.4.3
+  - 1.4.5.3
+  - 0.5.10
+  - 0.2.20
+  - 1.0.6
+  - 0.93.3
+  - 1.3.2
+  - 0.7.1
+  - 0.5.0
+  - '0.10'
+  - 0.3.2
+  - 1.0.0
+  - 1.1.1
+  - 0.8.1
+  - 1.3.1
+  - 1.4.6
+  - 1.4.0
+  - 2.43.1
+  - 3.1.8
+  - 1.2.1
+  - 1.2.0
+  - 1.2.1
+  - 0.1.2.1
+  - 0.6.6
+  - 1.4.0
+  - 1.2.2
+  - 0.5.1
+  - 0.5.1
+  - 0.3.0
+  - 0.3.2
+  - 2.5.0
+  - '1.0'
+  - 1.2.2
+  - 2.2.0
+  - 2.0.4
+  loadedversion:
+  - 1.4-5
+  - 0.2.1
+  - 1.1.5
+  - 0.1-3
+  - 1.0-6
+  - 0.5.2
+  - 3.0.0
+  - 3.0-2
+  - 3.0-2
+  - 1.1.0
+  - 7.3-14
+  - 0.4-2
+  - 3.4.1
+  - 2.0.7-1
+  - 1.4-1
+  - 1.4.0
+  - 1.3.4
+  - 4.3.3
+  - 1.14.2
+  - 1.1.0
+  - 1.9.0
+  - 1.0-8
+  - 1.2.0
+  - 2.0.1
+  - 0.6.25
+  - 0.75-7
+  - 1.0.10
+  - 1.7-3
+  - 0.3.2
+  - 1.0.3
+  - 1.6.1
+  - 2.3-14
+  - 0.3.0
+  - 0.8-71
+  - 2.1-11.1
+  - 1.4.1
+  - 2.1.1
+  - 0.1.3
+  - 0.1-20
+  - 3.0.0
+  - 3.2.1
+  - 0.2.5.999
+  - 0.8.1
+  - 0.4.0
+  - 1.6.2
+  - '2.3'
+  - 0.3.0
+  - 2.0.0
+  - 0.5.2
+  - 1.4.4
+  - 1.1.1
+  - 0.1-8
+  - 1.8.3
+  - 0.9-27
+  - 2.23-15
+  - '0.3'
+  - 0.20-38
+  - 0.2.2
+  - 1.0.3
+  - 1.7.4
+  - 0.2-1
+  - 2.0.3
+  - 3.3.0
+  - 7.3-51.1
+  - 1.2-15
+  - 5.4.2
+  - 1.1.0
+  - 0.1.2
+  - 0.2-22
+  - 0.5.0
+  - 1.0-8
+  - 3.1-137
+  - 7.3-12
+  - 4.1.0
+  - 1.8.1
+  - 1.0.2
+  - 2.0.3
+  - 1.0.2
+  - 1.8.8
+  - 0.1-7
+  - 2.2-6
+  - 1.0.2
+  - 3.4.2
+  - 1.3.2
+  - 0.3.5
+  - 2.5.1
+  - 1.1-2
+  - 1.0.9
+  - 1.3.1
+  - 1.4.1
+  - 2.1.0
+  - 1.4.3
+  - 1.4.5.3
+  - 0.5.10
+  - 0.2.20
+  - 1.0.6
+  - 0.93-3
+  - 1.3-2
+  - 0.7.1
+  - 0.5.0
+  - '0.10'
+  - 0.3.2
+  - 1.0.0
+  - 1.1.1
+  - 0.8-1
+  - 1.3-1
+  - 1.4.6
+  - 1.4.0
+  - 2.43-1
+  - 3.1.8
+  - 1.2.1
+  - 1.2.0
+  - 1.2.1
+  - 0.1-2.1
+  - 0.6-6
+  - 1.4.0
+  - 1.2.2
+  - 0.5.1
+  - 0.5.1
+  - 0.3.0
+  - 0.3-2
+  - 2.5.0
+  - '1.0'
+  - 1.2.2
+  - 2.2.0
+  - 2.0.4
+  path:
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/abind
+  - /Users/oscarbruck/Library/R/3.5/library/assertthat
+  - /Users/oscarbruck/Library/R/3.5/library/backports
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/base64enc
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/bitops
+  - /Users/oscarbruck/Library/R/3.5/library/broom
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/callr
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/car
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/carData
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/cellranger
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/class
+  - /Users/oscarbruck/Library/R/3.5/library/classInt
+  - /Users/oscarbruck/Library/R/3.5/library/cli
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/cluster
+  - /Users/oscarbruck/Library/R/3.5/library/colorspace
+  - /Users/oscarbruck/Library/R/3.5/library/countrycode
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/crayon
+  - /Users/oscarbruck/Library/R/3.5/library/curl
+  - /Users/oscarbruck/Library/R/3.5/library/data.table
+  - /Users/oscarbruck/Library/R/3.5/library/DBI
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/dendextend
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/DEoptimR
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/desc
+  - /Users/oscarbruck/Library/R/3.5/library/devtools
+  - /Users/oscarbruck/Library/R/3.5/library/digest
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/diptest
+  - /Users/oscarbruck/Library/R/3.5/library/dplyr
+  - /Users/oscarbruck/Library/R/3.5/library/e1071
+  - /Users/oscarbruck/Library/R/3.5/library/ellipsis
+  - /Users/oscarbruck/Library/R/3.5/library/fansi
+  - /Users/oscarbruck/Library/R/3.5/library/fastDummies
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/flexmix
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/forcats
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/foreign
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/fpc
+  - /Users/oscarbruck/Library/R/3.5/library/fs
+  - /Users/oscarbruck/Library/R/3.5/library/genderizeR
+  - /Users/oscarbruck/Library/R/3.5/library/generics
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/ggdendro
+  - /Users/oscarbruck/Library/R/3.5/library/ggmap
+  - /Users/oscarbruck/Library/R/3.5/library/ggplot2
+  - /Users/oscarbruck/Library/R/3.5/library/ggpubr
+  - /Users/oscarbruck/Library/R/3.5/library/ggrepel
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/ggsignif
+  - /Users/oscarbruck/Library/R/3.5/library/glue
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/gridExtra
+  - /Users/oscarbruck/Library/R/3.5/library/gtable
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/haven
+  - /Users/oscarbruck/Library/R/3.5/library/hms
+  - /Users/oscarbruck/Library/R/3.5/library/httr
+  - /Users/oscarbruck/Library/R/3.5/library/janitor
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/jpeg
+  - /Users/oscarbruck/Library/R/3.5/library/jsonlite
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/kernlab
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/KernSmooth
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/labeling
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/lattice
+  - /Users/oscarbruck/Library/R/3.5/library/lazyeval
+  - /Users/oscarbruck/Library/R/3.5/library/lifecycle
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/lubridate
+  - /Users/oscarbruck/Library/R/3.5/library/lwgeom
+  - /Users/oscarbruck/Library/R/3.5/library/magrittr
+  - /Users/oscarbruck/Library/R/3.5/library/maps
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/MASS
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/Matrix
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/mclust
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/memoise
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/modelr
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/modeltools
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/munsell
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/mvtnorm
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/nlme
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/nnet
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/openxlsx
+  - /Users/oscarbruck/Library/R/3.5/library/pillar
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/pkgbuild
+  - /Users/oscarbruck/Library/R/3.5/library/pkgconfig
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/pkgload
+  - /Users/oscarbruck/Library/R/3.5/library/plyr
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/png
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/prabclus
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/prettyunits
+  - /Users/oscarbruck/Library/R/3.5/library/processx
+  - /Users/oscarbruck/Library/R/3.5/library/ps
+  - /Users/oscarbruck/Library/R/3.5/library/purrr
+  - /Users/oscarbruck/Library/R/3.5/library/R6
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/RColorBrewer
+  - /Users/oscarbruck/Library/R/3.5/library/Rcpp
+  - /Users/oscarbruck/Library/R/3.5/library/readr
+  - /Users/oscarbruck/Library/R/3.5/library/readxl
+  - /Users/oscarbruck/Library/R/3.5/library/remotes
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/reshape2
+  - /Users/oscarbruck/Library/R/3.5/library/RgoogleMaps
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rio
+  - /Users/oscarbruck/Library/R/3.5/library/rjson
+  - /Users/oscarbruck/Library/R/3.5/library/rlang
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/robustbase
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rprojroot
+  - /Users/oscarbruck/Library/R/3.5/library/rscopus
+  - /Users/oscarbruck/Library/R/3.5/library/rstatix
+  - /Users/oscarbruck/Library/R/3.5/library/rstudioapi
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rvest
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/scales
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/sessioninfo
+  - /Users/oscarbruck/Library/R/3.5/library/sf
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/sp
+  - /Users/oscarbruck/Library/R/3.5/library/stringi
+  - /Users/oscarbruck/Library/R/3.5/library/stringr
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/survival
+  - /Users/oscarbruck/Library/R/3.5/library/tibble
+  - /Users/oscarbruck/Library/R/3.5/library/tidyr
+  - /Users/oscarbruck/Library/R/3.5/library/tidyselect
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/tidyverse
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/trimcluster
+  - /Users/oscarbruck/Library/R/3.5/library/units
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/usethis
+  - /Users/oscarbruck/Library/R/3.5/library/utf8
+  - /Users/oscarbruck/Library/R/3.5/library/vctrs
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/viridis
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/viridisLite
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/whisker
+  - /Users/oscarbruck/Library/R/3.5/library/withr
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/writexl
+  - /Users/oscarbruck/Library/R/3.5/library/xml2
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/yaml
+  - /Users/oscarbruck/Library/R/3.5/library/zip
+  loadedpath:
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/abind
+  - /Users/oscarbruck/Library/R/3.5/library/assertthat
+  - /Users/oscarbruck/Library/R/3.5/library/backports
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/base64enc
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/bitops
+  - /Users/oscarbruck/Library/R/3.5/library/broom
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/callr
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/car
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/carData
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/cellranger
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/class
+  - /Users/oscarbruck/Library/R/3.5/library/classInt
+  - /Users/oscarbruck/Library/R/3.5/library/cli
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/cluster
+  - /Users/oscarbruck/Library/R/3.5/library/colorspace
+  - /Users/oscarbruck/Library/R/3.5/library/countrycode
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/crayon
+  - /Users/oscarbruck/Library/R/3.5/library/curl
+  - /Users/oscarbruck/Library/R/3.5/library/data.table
+  - /Users/oscarbruck/Library/R/3.5/library/DBI
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/dendextend
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/DEoptimR
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/desc
+  - /Users/oscarbruck/Library/R/3.5/library/devtools
+  - /Users/oscarbruck/Library/R/3.5/library/digest
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/diptest
+  - /Users/oscarbruck/Library/R/3.5/library/dplyr
+  - /Users/oscarbruck/Library/R/3.5/library/e1071
+  - /Users/oscarbruck/Library/R/3.5/library/ellipsis
+  - /Users/oscarbruck/Library/R/3.5/library/fansi
+  - /Users/oscarbruck/Library/R/3.5/library/fastDummies
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/flexmix
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/forcats
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/foreign
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/fpc
+  - /Users/oscarbruck/Library/R/3.5/library/fs
+  - /Users/oscarbruck/Library/R/3.5/library/genderizeR
+  - /Users/oscarbruck/Library/R/3.5/library/generics
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/ggdendro
+  - /Users/oscarbruck/Library/R/3.5/library/ggmap
+  - /Users/oscarbruck/Library/R/3.5/library/ggplot2
+  - /Users/oscarbruck/Library/R/3.5/library/ggpubr
+  - /Users/oscarbruck/Library/R/3.5/library/ggrepel
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/ggsignif
+  - /Users/oscarbruck/Library/R/3.5/library/glue
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/gridExtra
+  - /Users/oscarbruck/Library/R/3.5/library/gtable
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/haven
+  - /Users/oscarbruck/Library/R/3.5/library/hms
+  - /Users/oscarbruck/Library/R/3.5/library/httr
+  - /Users/oscarbruck/Library/R/3.5/library/janitor
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/jpeg
+  - /Users/oscarbruck/Library/R/3.5/library/jsonlite
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/kernlab
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/KernSmooth
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/labeling
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/lattice
+  - /Users/oscarbruck/Library/R/3.5/library/lazyeval
+  - /Users/oscarbruck/Library/R/3.5/library/lifecycle
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/lubridate
+  - /Users/oscarbruck/Library/R/3.5/library/lwgeom
+  - /Users/oscarbruck/Library/R/3.5/library/magrittr
+  - /Users/oscarbruck/Library/R/3.5/library/maps
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/MASS
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/Matrix
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/mclust
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/memoise
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/modelr
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/modeltools
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/munsell
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/mvtnorm
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/nlme
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/nnet
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/openxlsx
+  - /Users/oscarbruck/Library/R/3.5/library/pillar
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/pkgbuild
+  - /Users/oscarbruck/Library/R/3.5/library/pkgconfig
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/pkgload
+  - /Users/oscarbruck/Library/R/3.5/library/plyr
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/png
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/prabclus
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/prettyunits
+  - /Users/oscarbruck/Library/R/3.5/library/processx
+  - /Users/oscarbruck/Library/R/3.5/library/ps
+  - /Users/oscarbruck/Library/R/3.5/library/purrr
+  - /Users/oscarbruck/Library/R/3.5/library/R6
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/RColorBrewer
+  - /Users/oscarbruck/Library/R/3.5/library/Rcpp
+  - /Users/oscarbruck/Library/R/3.5/library/readr
+  - /Users/oscarbruck/Library/R/3.5/library/readxl
+  - /Users/oscarbruck/Library/R/3.5/library/remotes
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/reshape2
+  - /Users/oscarbruck/Library/R/3.5/library/RgoogleMaps
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rio
+  - /Users/oscarbruck/Library/R/3.5/library/rjson
+  - /Users/oscarbruck/Library/R/3.5/library/rlang
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/robustbase
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rprojroot
+  - /Users/oscarbruck/Library/R/3.5/library/rscopus
+  - /Users/oscarbruck/Library/R/3.5/library/rstatix
+  - /Users/oscarbruck/Library/R/3.5/library/rstudioapi
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/rvest
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/scales
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/sessioninfo
+  - /Users/oscarbruck/Library/R/3.5/library/sf
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/sp
+  - /Users/oscarbruck/Library/R/3.5/library/stringi
+  - /Users/oscarbruck/Library/R/3.5/library/stringr
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/survival
+  - /Users/oscarbruck/Library/R/3.5/library/tibble
+  - /Users/oscarbruck/Library/R/3.5/library/tidyr
+  - /Users/oscarbruck/Library/R/3.5/library/tidyselect
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/tidyverse
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/trimcluster
+  - /Users/oscarbruck/Library/R/3.5/library/units
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/usethis
+  - /Users/oscarbruck/Library/R/3.5/library/utf8
+  - /Users/oscarbruck/Library/R/3.5/library/vctrs
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/viridis
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/viridisLite
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/whisker
+  - /Users/oscarbruck/Library/R/3.5/library/withr
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/writexl
+  - /Users/oscarbruck/Library/R/3.5/library/xml2
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library/yaml
+  - /Users/oscarbruck/Library/R/3.5/library/zip
+  attached:
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - yes
+  - no
+  - no
+  - yes
+  - no
+  - yes
+  - no
+  - no
+  - no
+  - no
+  - no
+  - yes
+  - no
+  - no
+  - no
+  - yes
+  - no
+  - yes
+  - no
+  - no
+  - no
+  - yes
+  - no
+  - yes
+  - yes
+  - yes
+  - yes
+  - yes
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - yes
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - yes
+  - yes
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - yes
+  - no
+  - no
+  - no
+  - yes
+  - yes
+  - no
+  - yes
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - yes
+  - yes
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - yes
+  - yes
+  - yes
+  - yes
+  - no
+  - yes
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - yes
+  - no
+  - no
+  - no
+  is_base:
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  - no
+  date:
+  - '2016-07-21'
+  - '2019-03-21'
+  - '2019-10-02'
+  - '2015-07-28'
+  - '2013-08-17'
+  - '2019-04-07'
+  - '2018-08-24'
+  - '2018-08-23'
+  - '2018-09-30'
+  - '2016-07-27'
+  - '2015-08-30'
+  - '2019-10-17'
+  - '2022-09-23'
+  - '2018-04-13'
+  - '2019-03-18'
+  - '2022-05-04'
+  - '2017-09-16'
+  - '2022-10-06'
+  - '2021-09-27'
+  - '2019-12-15'
+  - '2018-10-19'
+  - '2016-11-19'
+  - '2018-05-01'
+  - '2018-10-26'
+  - '2020-02-23'
+  - '2016-12-05'
+  - '2022-09-01'
+  - '2019-11-26'
+  - '2021-04-29'
+  - '2022-03-24'
+  - '2020-03-07'
+  - '2017-04-28'
+  - '2018-02-19'
+  - '2018-07-20'
+  - '2018-07-20'
+  - '2020-04-04'
+  - '2022-10-17'
+  - '2022-07-05'
+  - '2016-04-27'
+  - '2019-02-04'
+  - '2019-08-10'
+  - '2020-03-30'
+  - '2019-05-07'
+  - '2017-08-03'
+  - '2022-02-24'
+  - '2017-09-09'
+  - '2019-03-25'
+  - '2018-11-22'
+  - '2019-10-30'
+  - '2022-08-17'
+  - '2018-07-31'
+  - '2014-01-23'
+  - '2022-10-21'
+  - '2018-08-10'
+  - '2015-06-29'
+  - '2014-08-23'
+  - '2018-11-04'
+  - '2019-03-15'
+  - '2022-10-07'
+  - '2018-04-11'
+  - '2020-01-31'
+  - '2022-03-30'
+  - '2018-04-03'
+  - '2018-11-01'
+  - '2018-11-01'
+  - '2018-11-17'
+  - '2017-04-21'
+  - '2018-05-11'
+  - '2018-07-16'
+  - '2018-06-12'
+  - '2018-05-31'
+  - '2018-04-07'
+  - '2016-02-02'
+  - '2018-05-26'
+  - '2022-08-19'
+  - '2018-10-16'
+  - '2019-09-22'
+  - '2018-10-29'
+  - '2022-11-11'
+  - '2013-12-03'
+  - '2015-01-14'
+  - '2015-07-13'
+  - '2020-02-09'
+  - '2020-02-13'
+  - '2022-10-06'
+  - '2021-08-19'
+  - '2014-12-07'
+  - '2022-07-08'
+  - '2018-12-21'
+  - '2022-08-17'
+  - '2019-06-24'
+  - '2017-12-11'
+  - '2020-02-12'
+  - '2018-03-29'
+  - '2018-06-08'
+  - '2022-09-24'
+  - '2018-09-21'
+  - '2018-01-03'
+  - '2022-11-21'
+  - '2020-04-28'
+  - '2019-03-19'
+  - '2016-06-17'
+  - '2018-08-09'
+  - '2018-11-05'
+  - '2020-01-28'
+  - '2018-06-05'
+  - '2020-02-17'
+  - '2019-02-10'
+  - '2018-10-29'
+  - '2022-07-22'
+  - '2022-09-08'
+  - '2022-10-10'
+  - '2017-11-14'
+  - '2018-07-20'
+  - '2020-03-16'
+  - '2018-08-14'
+  - '2021-07-24'
+  - '2022-11-16'
+  - '2018-03-29'
+  - '2018-02-01'
+  - '2013-04-28'
+  - '2022-03-03'
+  - '2018-05-10'
+  - '2019-08-09'
+  - '2018-07-25'
+  - '2019-09-01'
+  source:
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.1)
+  - Github (kalimu/genderizeR@0d68c01)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.2)
+  - Github (kassambara/ggpubr@3343005)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - Github (muschellij2/rscopus@bf14476)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.1)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.2)
+  - CRAN (R 3.5.0)
+  - CRAN (R 3.5.2)
+  md5ok:
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  - .na
+  library:
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library
+  - /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+  - /Users/oscarbruck/Library/R/3.5/library

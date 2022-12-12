@@ -1,0 +1,17 @@
+tidyverse
+readxl
+janitor
+fastDummies
+maps
+reshape2
+ggmap
+data.table
+countrycode
+genderizeR
+ggplot2
+ggpubr
+ggrepel
+rstatix
+ggdendro
+dendextend
+writexl
