@@ -20,6 +20,11 @@ National population data were downloaded from the [World Bank database](https://
 
 ## INSTRUCTIONS
 
+### API
+**NB!** You will need at least the Google API key (free, [instructions](https://developers.google.com/maps/documentation/places/web-service/cloud-setup)) to query geolocation data and possibly also a Genderize.io API key (free for 1000 queries/day, for faster use see subscriptions in [Genderize.io](https://store.genderize.io/usage))
+- google_api = "blabla"              # replace blabla with your Google API key to query, this is needed in lines 571-606  
+- genderizeio_api = "blabla"         # replace blabla with your Genderize API key if you need one, see line 1150
+
 ### Instructions if you operate with RStudio
 1. Install RStudio (the analyses here have been made with the version 3.5.1)
 2. Install necessary R packages either by running the Rscript `./src/install_packages.R`
