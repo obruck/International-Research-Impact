@@ -1733,6 +1733,26 @@ for (i in c("author_first_gender", "author_second_gender", "author_second_last_g
   
 }
 
+
+# Statistics
+# df_plot1 %>%
+#   group_by(Author) %>%
+#   summarise(n_of_authors = sum(Female+Male)) %>%
+#   ungroup() %>%
+#   right_join(df_plot1) %>%
+#   group_by(Author) %>%
+#   dplyr::mutate(Prop_relative = Female+Male/n_of_authors*Prop)
+df_plot1 %>%
+  mutate(Firsts = ifelse(Author %in% c("First", "Second"), 1, 0),
+         Prop1 = Female/(Female+Male)) %>%
+  rstatix::wilcox_test(Prop1 ~ Firsts)
+df_plot1 %>%
+  mutate(Firsts = ifelse(Author %in% c("First", "Second"), 1, 0),
+         Prop1 = Female/(Female+Male)) %>%
+  group_by(Firsts) %>%
+  summarise(Prop1 = median(Prop1))
+
+
 ## Process
 df_plot1 <- df_plot1 %>%
   dplyr::mutate(Author = factor(Author, levels = c("First", "Second", "Second Last", "Last")),
@@ -1785,13 +1805,13 @@ for (i in grep("type_", colnames(df_kw1), invert = TRUE)) {
   df_kw1[[i]] <- ifelse(df_kw1[[i]] > 1, 1, df_kw1[[i]])
 }
 
-## Filter only keywords occurring >9 times
+## Filter only keywords occurring >19 times
 v1 <- colSums(df_kw1[,(grep("type_", colnames(df_kw1), invert = TRUE))])
 ww <- v1>19
 df_kw2 <- cbind(df_kw1[,(grep("type_", colnames(df_kw1), invert = FALSE))], df_kw1[ncol(df_kw1[,(grep("type_", colnames(df_kw1), invert = FALSE))])+which(ww==TRUE)])
 
 ## Combine citation data
-df_kw3 <- cbind(df %>% dplyr::select(ends_with("gender"), times_cited_all_databases), df_kw2)
+df_kw3 <- cbind(df %>% dplyr::select(ends_with("gender"), times_cited_all_databases, authors_tmp), df_kw2)
 
 ### Mann-Whitney U test
 w <- colnames(df_kw2[,(grep("type_", colnames(df_kw2), invert = TRUE))])
@@ -1813,6 +1833,7 @@ pvalue_df_first <- pvalue %>% data.frame() %>% mutate(
   dplyr::mutate(
     FC = Med1 / Med0)
 rownames(pvalue_df_first) = NULL
+pvalue_df_first_kw <- pvalue_df_first
 
 # Gender deviation
 pvalue_df_gender_first <- df_kw3 %>%
@@ -1869,7 +1890,6 @@ pvalue_df_gender$F_to_M_last = ((pvalue_df_gender$female_prop_last / (pvalue_df_
 
 # Join pvalue_df_first and pvalue_df_gender
 pvalue_df_first1 <- full_join(pvalue_df_first, pvalue_df_gender)
-
 
 # First author
 # Top 20
@@ -2903,7 +2923,7 @@ save.image(file='data_export/Session.RData')
 
 
 # Plot
-for (i in c("author_first_gender", "author_last_gender", "number_of_pages_cat", "authors_tmp_cat")) {
+for (i in c("author_first_gender", "author_last_gender", "authors_tmp_cat")) {   #"number_of_pages_cat",
   
   print(i)
   df$tmp <- df[[i]]
@@ -3043,6 +3063,103 @@ for (i in c("author_first_gender", "author_last_gender", "number_of_pages_cat", 
           legend.direction = "horizontal")
   g
   ggsave(plot = g, filename = paste0("results/time/", i, "_publications_by_publication_year.png"), width = 5.5, height = 5, units = "in", dpi = 300)
+  
+  if (i == "authors_tmp_cat") {
+    for (j in c("male", "female")) {
+      for (k in c("author_first_gender", "author_last_gender")) {
+        # j="male"; k="author_first_gender"
+        df$tmp1 <- df[[k]]
+        
+    # Summarise
+    df_plot <- df %>%
+      dplyr::filter(!is.na(tmp)) %>%
+      dplyr::filter(tmp1 == j) %>%
+      group_by(tmp, publication_year) %>%
+      summarise(times_cited_all_databases = median(times_cited_all_databases),
+                n=n()) %>%
+      ungroup() %>%
+      dplyr::mutate(publication_year = factor(publication_year),
+                    tmp = tools::toTitleCase(tmp))
+    
+    # Statistics
+    df_plot1 <- df_plot %>% 
+      mutate(publication_year = as.numeric(as.character(publication_year))-2009)
+    
+    ## Citations
+    zz <- df_plot1 %>% 
+      group_by(tmp) %>% 
+      do({
+        mod = lm(times_cited_all_databases ~ publication_year, data = .)
+        data.frame(Intercept = coef(mod)[1],
+                   Slope = coef(mod)[2])
+      })
+    print(zz)
+    
+    fit1 = lm(times_cited_all_databases ~ publication_year*tmp, data=df_plot1)
+    print(summary(fit1)$call)
+    print(summary(fit1))
+    
+    
+    ## Number of publications
+    zz1 <- df_plot1 %>% 
+      group_by(tmp) %>% 
+      do({
+        mod = lm(n ~ publication_year, data = .)
+        data.frame(Intercept = coef(mod)[1],
+                   Slope = coef(mod)[2])
+      })
+    print(zz1)
+    
+    fit2 = lm(n ~ publication_year*tmp, data=df_plot1)
+    print(summary(fit2)$call)
+    print(summary(fit2))
+    
+    
+    g <- ggplot(data = df_plot, aes(x = publication_year, y = n, group = tmp)) +
+      geom_line(size = 1.5) +
+      geom_smooth(method="lm", aes(col = tmp), size = 2) +
+      xlab("Publication year") +
+      ylab("# Publications by year") +
+      geom_point(aes(fill = tmp), size=4, col="black", shape=21) +
+      geom_text(data=zz1[2,], aes(label = paste0("Slope ", round(Slope, 2))),
+                x = 10,
+                vjust = "inward", hjust = "inward",
+                y = max(df_plot$n),
+                size = 5, colour = "#377eb8"
+      ) +
+      geom_text(data=zz1[1,], aes(label = paste0("Slope ", round(Slope, 2))),
+                x = 10,
+                vjust = "inward", hjust = "inward",
+                y = max(df_plot$n)-0.05*max(df_plot$n),
+                size = 5, colour = "#e41a1c"
+      ) +
+      scale_color_brewer(palette="Set1") +
+      scale_fill_brewer(palette="Set1", name=str_to_sentence(gsub("author last", "last author",
+                                                                  gsub("author first", "first author",
+                                                                       # gsub("gender", "sex",
+                                                                       gsub("number of pages cat", "# Pages",
+                                                                            gsub("authors tmp cat", "# Authors",
+                                                                                 gsub("_", " ", i))))))) +
+      guides(color = FALSE,
+             fill = guide_legend(override.aes = list(size=8))) +
+      theme_bw() +
+      theme(axis.text.x = element_text(size=14, colour = "black", angle = 45, hjust = 1),
+            axis.text.y = element_text(size=14, colour = "black"),
+            axis.title.y = element_text(size=14, face="bold", colour = "black"),
+            axis.title.x = element_text(size=14, face="bold", colour = "black"),
+            legend.title = element_text(size=14, face="bold", colour = "black"),
+            legend.text = element_text(size=14, colour = "black"),
+            legend.position = "bottom",
+            legend.box = "vertical",
+            legend.direction = "horizontal")
+    g
+    ggsave(plot = g, filename = paste0("combined_noncovid/results/time/", i, "_", j, "_", k, "_publications_by_publication_year.png"), width = 5.5, height = 5, units = "in", dpi = 300)
+    
+    df$tmp1 <- NULL
+    
+      }
+    }
+  }
   
 }
 
@@ -3185,7 +3302,7 @@ print(zz2)
 
 
 
-# Plot
+# Plot with # of Authors and # of Pages
 g <- ggplot(data = df_plot, aes(x = publication_year, y = med)) +
   geom_smooth(aes(group=variable, color=variable), method="lm", size = 2) +
   xlab("Publication year") +
@@ -3219,6 +3336,35 @@ g <- ggplot(data = df_plot, aes(x = publication_year, y = med)) +
         legend.direction = "horizontal")
 g
 ggsave(plot = g, filename = "results/time/Corplot_authors_and_pages_by_publication_year.png", width = 5.5, height = 5, units = "in", dpi = 300)
+
+
+# Plot with only # of Authors
+df_plot <- df_plot %>% dplyr::filter(variable == "# Authors")
+g <- ggplot(data = df_plot, aes(x = publication_year, y = med)) +
+  geom_smooth(aes(group=variable), color="black", method="lm", size = 2) +
+  xlab("Publication year") +
+  ylab("Number") +
+  geom_point(fill="black", size=4, col="black", shape=21) +
+  geom_text(data=zz2, aes(label = paste0("Slope ", round(Slope, 2))),
+            x = 1,
+            vjust = "inward", hjust = "inward",
+            y = min(df_plot$med)+0.30*min(df_plot$med),
+            size = 5, colour = "black"
+  ) +
+  guides(fill = guide_legend(override.aes = list(size=8)),
+         color = FALSE) +
+  theme_bw() +
+  theme(axis.text.x = element_text(size=14, colour = "black", angle = 45, hjust = 1),
+        axis.text.y = element_text(size=14, colour = "black"),
+        axis.title.y = element_text(size=14, face="bold", colour = "black"),
+        axis.title.x = element_text(size=14, face="bold", colour = "black"),
+        legend.title = element_text(size=14, face="bold", colour = "black"),
+        legend.text = element_text(size=14, colour = "black"),
+        legend.position = "bottom",
+        legend.box = "vertical",
+        legend.direction = "horizontal")
+g
+ggsave(plot = g, filename = "combined_noncovid/results/time/Corplot_authors_by_publication_year.png", width = 5.5, height = 5, units = "in", dpi = 300)
   
 
   
@@ -3618,3 +3764,235 @@ dend <- hclust(dist(hc), method = "ward.D2") %>% as.dendrogram %>%
 ggd1 <- as.ggdend(dend)
 ggd1 <- ggplot(ggd1, horiz = TRUE)
 ggsave(plot = ggd1, filename = "results/publications/Balloonplot_citations_country_clusters1.png", width = 2, height = 5, units = "in", dpi = 300)
+
+
+################################# COAUTHORS BY COUNTRIES #########################################################################################################
+
+
+# Country
+## Total
+multiple_t_tests_p_value <- lapply(df[a$country.etc], function(x) wilcox.test(df$authors_tmp ~ x, na.rm=TRUE, exact=FALSE))
+### P-values can be extracted from the result object
+pvalue <- data.frame(p.value = sapply(multiple_t_tests_p_value, getElement, name = "p.value"))
+### Create a matrix and dataframe of the p-values
+pvalue_df_gender_total <- pvalue %>% data.frame() %>% mutate(
+  #### Add the p values to a new dataframe
+  p_adjusted = p.adjust(p = as.matrix(pvalue), method = "BH"),
+  #### Add also the t values, 95%CI to the same dataframe
+  Med0 = unlist(lapply(df[a$country.etc], function(x) median(df[x==0,]$authors_tmp, na.rm=TRUE))),
+  Med1 = unlist(lapply(df[a$country.etc], function(x) median(df[x==1,]$authors_tmp, na.rm=TRUE)))
+) %>%
+  ## Rownames to column
+  rownames_to_column() %>%
+  rename(Country = rowname,
+         pvalue = p.value) %>%
+  dplyr::mutate(
+    FC = Med1 / Med0)
+
+## Female first
+df_female_first <- df[df$author_first_gender=="female",]
+multiple_t_tests_p_value <- lapply(df_female_first[a$country.etc], function(x) wilcox.test(df_female_first$authors_tmp ~ x, na.rm=TRUE, exact=FALSE))
+### P-values can be extracted from the result object
+pvalue <- data.frame(p.value = sapply(multiple_t_tests_p_value, getElement, name = "p.value"))
+### Create a matrix and dataframe of the p-values
+pvalue_df_gender_female_first <- pvalue %>% data.frame() %>% mutate(
+  #### Add the p values to a new dataframe
+  p_adjusted = p.adjust(p = as.matrix(pvalue), method = "BH"),
+  #### Add also the t values, 95%CI to the same dataframe
+  Med0 = unlist(lapply(df_female_first[a$country.etc], function(x) median(df_female_first[x==0,]$authors_tmp, na.rm=TRUE))),
+  Med1 = unlist(lapply(df_female_first[a$country.etc], function(x) median(df_female_first[x==1,]$authors_tmp, na.rm=TRUE)))
+) %>%
+  ## Rownames to column
+  rownames_to_column() %>%
+  rename(Country = rowname,
+         pvalue = p.value) %>%
+  dplyr::mutate(
+    FC = Med1 / Med0,
+    Author = "Female first")
+
+## Male first
+df_male_first <- df[df$author_first_gender=="male",]
+multiple_t_tests_p_value <- lapply(df_male_first[a$country.etc], function(x) wilcox.test(df_male_first$authors_tmp ~ x, na.rm=TRUE, exact=FALSE))
+### P-values can be extracted from the result object
+pvalue <- data.frame(p.value = sapply(multiple_t_tests_p_value, getElement, name = "p.value"))
+### Create a matrix and dataframe of the p-values
+pvalue_df_gender_male_first <- pvalue %>% data.frame() %>% mutate(
+  #### Add the p values to a new dataframe
+  p_adjusted = p.adjust(p = as.matrix(pvalue), method = "BH"),
+  #### Add also the t values, 95%CI to the same dataframe
+  Med0 = unlist(lapply(df_male_first[a$country.etc], function(x) median(df_male_first[x==0,]$authors_tmp, na.rm=TRUE))),
+  Med1 = unlist(lapply(df_male_first[a$country.etc], function(x) median(df_male_first[x==1,]$authors_tmp, na.rm=TRUE)))
+) %>%
+  ## Rownames to column
+  rownames_to_column() %>%
+  rename(Country = rowname,
+         pvalue = p.value) %>%
+  dplyr::mutate(
+    FC = Med1 / Med0,
+    Author = "Male first")
+
+
+## Female last
+df_female_last <- df[df$author_last_gender=="female",]
+multiple_t_tests_p_value <- lapply(df_female_last[a$country.etc], function(x) wilcox.test(df_female_last$authors_tmp ~ x, na.rm=TRUE, exact=FALSE))
+### P-values can be extracted from the result object
+pvalue <- data.frame(p.value = sapply(multiple_t_tests_p_value, getElement, name = "p.value"))
+### Create a matrix and dataframe of the p-values
+pvalue_df_gender_female_last <- pvalue %>% data.frame() %>% mutate(
+  #### Add the p values to a new dataframe
+  p_adjusted = p.adjust(p = as.matrix(pvalue), method = "BH"),
+  #### Add also the t values, 95%CI to the same dataframe
+  Med0 = unlist(lapply(df_female_last[a$country.etc], function(x) median(df_female_last[x==0,]$authors_tmp, na.rm=TRUE))),
+  Med1 = unlist(lapply(df_female_last[a$country.etc], function(x) median(df_female_last[x==1,]$authors_tmp, na.rm=TRUE)))
+) %>%
+  ## Rownames to column
+  rownames_to_column() %>%
+  rename(Country = rowname,
+         pvalue = p.value) %>%
+  dplyr::mutate(
+    FC = Med1 / Med0,
+    Author = "Female last")
+
+## Male last
+df_male_last <- df[df$author_last_gender=="male",]
+multiple_t_tests_p_value <- lapply(df_male_last[a$country.etc], function(x) wilcox.test(df_male_last$authors_tmp ~ x, na.rm=TRUE, exact=FALSE))
+### P-values can be extracted from the result object
+pvalue <- data.frame(p.value = sapply(multiple_t_tests_p_value, getElement, name = "p.value"))
+### Create a matrix and dataframe of the p-values
+pvalue_df_gender_male_last <- pvalue %>% data.frame() %>% mutate(
+  #### Add the p values to a new dataframe
+  p_adjusted = p.adjust(p = as.matrix(pvalue), method = "BH"),
+  #### Add also the t values, 95%CI to the same dataframe
+  Med0 = unlist(lapply(df_male_last[a$country.etc], function(x) median(df_male_last[x==0,]$authors_tmp, na.rm=TRUE))),
+  Med1 = unlist(lapply(df_male_last[a$country.etc], function(x) median(df_male_last[x==1,]$authors_tmp, na.rm=TRUE)))
+) %>%
+  ## Rownames to column
+  rownames_to_column() %>%
+  rename(Country = rowname,
+         pvalue = p.value) %>%
+  dplyr::mutate(
+    FC = Med1 / Med0,
+    Author = "Male last")
+
+# Join
+pvalue_df_gender <- full_join(
+  full_join(
+    full_join(pvalue_df_gender_female_first, pvalue_df_gender_male_first),
+    pvalue_df_gender_female_last),
+  pvalue_df_gender_male_last)
+
+
+## Process
+pvalue_df_gender <- pvalue_df_gender %>%
+  dplyr::mutate(Author = factor(Author, levels = c("Female first", "Male first", "Female last", "Male last")),
+                FC = ifelse(is.na(FC), 1, FC),
+                Prop_scale = FC - 1,
+                p_adjusted_neg = -log(ifelse(p_adjusted<0.05, p_adjusted, 0), 10))
+
+
+# Balloonplot
+p <- ggballoonplot(pvalue_df_gender, y = "Author", x = "Country",
+                   fill = "Prop_scale",
+                   size = "p_adjusted_neg",
+                   # size.range = c(1, 10),
+                   ggtheme = theme_bw()) +
+  scale_size(breaks = c(-log(0.05), -log(0.01), -log(0.001)),
+             labels = c(0.05, 0.01, 0.001),
+             range = c(1, 10)) +
+  # scale_fill_gradientn(colours = c("blue","white","red"),
+  #                      values = scales::rescale(c(-1, 0, 1)),
+  #                      guide = "colorbar") +
+  scale_fill_gradient2(
+    low = 'blue', high = 'red', mid = 'white', 
+    midpoint = 0, # <-- look at this
+    limit = c(-1, 1) ) +
+  guides(size = guide_legend(title="AdjP", nrow = 1, title.vjust = 0.5),
+         fill = guide_colorbar(title="# Authors (country A)/\n# Authors (other countries than A)", title.vjust = 0.75)) +
+  font("xy.text", size = 10, color = "black", face="plain") +
+  theme(axis.title.y = element_text(size=12, colour="black", face="bold", angle = 90),
+        axis.text.x = element_text(colour="black", angle = 45, hjust = 1),
+        axis.title.x = element_text(size=12, colour="black", face="bold"),
+        axis.text.y = element_text(colour="black"),
+        legend.title = element_text(size=12, colour="black", face="bold"),
+        legend.text = element_text(size=10, colour="black"),
+        legend.position = "bottom", legend.direction = "horizontal", legend.box="horizontal", legend.margin=margin())
+p
+ggsave(plot = p, filename = "combined_noncovid/results/gender/Balloonplot_gender_country_authornumber.png", width = 8, height = 3.5, units = "in", dpi = 300)
+
+
+################################# GENDER BY KEYWORDS #########################################################################################################
+
+
+# First gender
+if (exists("first_gender_citation_kw")) { rm(first_gender_citation_kw) }
+for (i in 1:length(w)) {
+
+  print(paste0("Processing ", i, "/", length(w)))
+  
+  # i = df_kw3[w][[1]]
+  tmp = df[df_kw3[w][[i]]==1,]
+  
+  if (!(is.na(unique(tmp[tmp$author_first_gender=="female",]$times_cited_all_databases)) & length(unique(tmp[tmp$author_first_gender=="female",]$times_cited_all_databases))==1 )) {
+    
+    # Calculate data
+    name <- w[i]
+    p <- wilcox_test(data = tmp, formula = times_cited_all_databases ~ author_first_gender, paired = FALSE)
+    med_f <- median(tmp[tmp$author_first_gender=="female",]$times_cited_all_databases, na.rm = TRUE)
+    med_m <- median(tmp[tmp$author_first_gender=="male",]$times_cited_all_databases, na.rm = TRUE)
+    
+    if (exists("first_gender_citation_kw")) {
+      first_gender_citation_kw <- rbind(first_gender_citation_kw, cbind(name, p["p"], med_f, med_m))
+    } else {
+      first_gender_citation_kw <- cbind(name, p["p"], med_f, med_m)
+    }
+  }
+}
+
+## Adjust p values
+first_gender_citation_kw$p_adj <- adjust_pvalue(first_gender_citation_kw$p, method = "BH")
+
+## Summarise
+nrow(first_gender_citation_kw)
+
+first_gender_citation_kw %>%
+  dplyr::filter(p_adj < 0.05) %>%
+  summarise(M = sum(med_m > med_f),
+            F = sum(med_m < med_f))
+
+
+# Last gender
+if (exists("last_gender_citation_kw")) { rm(last_gender_citation_kw) }
+for (i in 1:length(w)) {
+  
+  print(paste0("Processing ", i, "/", length(w)))
+  
+  # i = df_kw3[w][[1]]
+  tmp = df[df_kw3[w][[i]]==1,]
+  
+  if (!(is.na(unique(tmp[tmp$author_last_gender=="female",]$times_cited_all_databases)) & length(unique(tmp[tmp$author_last_gender=="female",]$times_cited_all_databases))==1 )) {
+    
+    # Calculate data
+    name <- w[i]
+    p <- wilcox_test(data = tmp, formula = times_cited_all_databases ~ author_last_gender, paired = FALSE)
+    med_f <- median(tmp[tmp$author_last_gender=="female",]$times_cited_all_databases, na.rm = TRUE)
+    med_m <- median(tmp[tmp$author_last_gender=="male",]$times_cited_all_databases, na.rm = TRUE)
+    
+    if (exists("last_gender_citation_kw")) {
+      last_gender_citation_kw <- rbind(last_gender_citation_kw, cbind(name, p["p"], med_f, med_m))
+    } else {
+      last_gender_citation_kw <- cbind(name, p["p"], med_f, med_m)
+    }
+  }
+}
+
+## Adjust p values
+last_gender_citation_kw$p_adj <- adjust_pvalue(last_gender_citation_kw$p, method = "BH")
+
+## Summarise
+nrow(last_gender_citation_kw)
+last_gender_citation_kw %>%
+  dplyr::filter(p_adj < 0.05) %>%
+  summarise(M = sum(med_m > med_f),
+            F = sum(med_m < med_f))
+
+
