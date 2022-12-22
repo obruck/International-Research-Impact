@@ -2,7 +2,7 @@ rm(list=ls())
 
 
 # NB! THESE NEED TO BE FIXED TO MAKE THE SCRIPT WORK
-google_api = "blabla"              # replace blabla with your Google API key to query, this is needed in lines 571-606
+google_api = "blabla"              # replace blabla with your Google API key to query, this is needed in lines 242 and 571-606
 genderizeio_api = "blabla"         # replace blabla with your Genderize API key if you need one, see line 1148
 
 
@@ -239,7 +239,7 @@ options(scipen = 999) ## To disable scientific notation
 ########################################## API ##########################################
 
 
-register_google(key=key, write = TRUE)
+register_google(key=google_api, write = TRUE)
 
 
 ########################################## DATA ##########################################
