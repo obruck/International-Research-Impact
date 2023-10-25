@@ -27,8 +27,8 @@ National population data were downloaded from the [World Bank database](https://
 
 ### Instructions if you operate with RStudio
 1. Install RStudio (the analyses here have been made with the version 3.5.1)
-2. Install necessary R packages either by running the Rscript `./src/install_packages.R`
-3. Run the analyses by running the Rscript `./src/full_script.R`. This will produce tables and images in `./src/results/`.
+2. Install necessary R packages either by running the Rscript `Rscript ./src/install_packages.R`
+3. Run the analyses by running the Rscript `Rscript ./src/full_script.R`. This will produce tables and images in `./src/results/`.
 
 ### Instructions if you operate with the terminal
 1. Install RStudio (the analyses here have been made with the version 3.5.1)
@@ -36,5 +36,7 @@ National population data were downloaded from the [World Bank database](https://
 3. `Rscript src/install_packages.R`
 4. Run the analyses by running `Rscript src/full_script.R`. This will produce results in `./src/results/`.
 
-
-A detailed description of  the R and library versions can be found in `session_info.yaml`.
+### Troubleshooting
+- A detailed description of the R and library versions can be found in `session_info.yaml`.
+- The Genderize.io library is not available yet for `R ≥4.0`.
+- The CRAN mirror has been set as `http://cran.r-project.org`. If can change this in the `./src/full_script.R` file line 47 if needed.

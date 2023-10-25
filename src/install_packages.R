@@ -42,5 +42,11 @@ pkgLoad_cran <- function( packages ) {
   
 }
 
+# Define R mirror
+r = getOption("repos")
+r["CRAN"] = "http://cran.r-project.org"  # This can be changed according to your location
+options(repos = r)
+
+
 # Install CRAN packages
-pkgLoad_cran(packages = as.vector(unlist(read.table(file.path(getCurrentFileLocation(), "requirements_cran.txt")))))
+pkgLoad_cran(packages = as.vector(unlist(read.table(file.path(gsub("src$", "environment", getCurrentFileLocation()), "requirements_cran.txt")))))
