@@ -10,8 +10,6 @@ genderizeio_api = "blabla"         # replace blabla with your Genderize API key 
 
 
 # LIBRARIES
-
-
 library(tidyverse)
 library(readxl)
 library(janitor)
@@ -21,7 +19,6 @@ library(reshape2)
 library(ggmap)
 library(data.table)
 library(countrycode)
-library(genderizeR)
 library(ggplot2)
 library(ggpubr)
 library(ggrepel)
@@ -29,6 +26,7 @@ library(rstatix)
 library(ggdendro)
 library(dendextend)
 library(writexl)
+library(genderizeR)
 
 
 # Set working directory
@@ -496,12 +494,12 @@ writexl::write_xlsx(a_export, "results/table1.xlsx")
 
 
 ## Cit ~ n of publications
-g <- ggplot(a, aes(y = log(n_articles, 10), x = log(times_cited_all_databases_sum, 10), label = paste0(country.etc, "\n", scales::percent(a$n_articles_diff_prop)))) +
+g <- ggplot(a, aes(y = log(n_articles, 10), x = log(times_cited_all_databases_sum, 10))) +
   geom_smooth(method = "lm") +
   geom_point(aes(fill=log(n_articles_per_pop, 10), size=-n_articles_diff), shape = 21, color="black", alpha = 0.85) +
   scale_fill_distiller(palette = "RdBu", direction = -1, name="# Publications/1 000 000 people (LOG10)", breaks = c(-1, 0, 1), labels = c(-1, 0, 1)) +
   scale_color_brewer(palette = "Set1", direction = 1, guide = "none") + 
-  geom_label_repel(aes(color=achiever2), min.segment.length = 0, seed = 42, box.padding = 1) +
+  geom_label_repel(aes(color=achiever2, label = paste0(country.etc, "\n", scales::percent(n_articles_diff_prop, accuracy = 1))), min.segment.length = 0, seed = 42, box.padding = 1, max.overlaps = 100) +
   scale_size(range = c(1, 20), name="# Publication excess", breaks = c(10, 100, 1000)) +  # , guide = "none"
   labs(x="# Citations (LOG10)", y="# Publications (LOG10)") +
   guides(
@@ -516,6 +514,8 @@ g <- ggplot(a, aes(y = log(n_articles, 10), x = log(times_cited_all_databases_su
         legend.box = 'vertical',
         legend.spacing.y = unit(0.1, 'cm'),
         legend.position = "bottom")
+g
+writexl::write_xlsx(a, "results/publications/Correlation_publications_articles.xlsx")
 ggsave(plot = g, filename = "results/publications/Correlation_publications_articles2.png", width = 8, height = 9, dpi = 300, units = "in")
 
 
@@ -608,8 +608,9 @@ df_long_city_final <- full_join(
 
 
 # Save to avoid rerunning this
-saveRDS(df_long_city_final, "data_export/combined.rds")
-df_long_city <- readRDS("../data_export/combined.rds")
+# saveRDS(df_long_city_final, "data_export/combined.rds")
+# df_long_city <- readRDS("../data_export/combined.rds")
+# df_long_city <- readRDS("../combined_noncovid/data_tmp/combined.rds")
 
 
 ########################################## MAP OF CITATIONS AND ARTICLES BY COUNTRIES ##########################################
@@ -657,6 +658,7 @@ worldHDI <- ggplot(data = df_world, mapping = aes(x = long, y = lat, group = gro
   geom_polygon(aes(fill = times_cited_all_databases3)) +
   scale_fill_distiller(palette ="Spectral", direction = -1, name="# Citations") + # or direction=1
   plain
+writexl::write_xlsx(df_world, "results/map/Map_country_number_of_citations_raw.xlsx")
 ggsave(plot = worldHDI, filename = "results/map/Map_country_number_of_citations_raw.png", width = 10, height = 8, dpi = 300, units = "in")
 worldHDI <- ggplot(data = df_world, mapping = aes(x = long, y = lat, group = group)) + 
   coord_fixed(1.3) +
@@ -732,6 +734,7 @@ g <- ggplot(df_continent %>% dplyr::filter(!is.na(continent)), aes(x = reorder(c
         legend.text = element_text(size=14, colour = "black"),
         legend.key = element_rect(color="black"),
         legend.position = "NULL")
+writexl::write_xlsx(df_continent %>% dplyr::filter(!is.na(continent)), "results/continent/Barplot_continent.xlsx")
 ggsave(plot = g, "results/continent/Barplot_continent_n_articles.png", width = 5, height = 4, units = "in", dpi = 300)
 
 
@@ -827,8 +830,12 @@ worldHDI2 <- plot_mapdata_pub(df_world_city3 %>%
                                 dplyr::mutate(times_cited_all_databases = ntile(log(times_cited_all_databases), 20)))
 
 ## Plot citations
+writexl::write_xlsx(df_world_city3 %>%
+                      dplyr::mutate(times_cited_all_databases = ntile(log(times_cited_all_databases), 20)), "results/map/map_city_citation.xlsx")
 ggsave(plot = worldHDI, filename = "results/map/map_city_citation.png", units = "in", dpi = 300, width = 20, height = 12)
 ## Plot publications
+writexl::write_xlsx(df_world_city3 %>%
+                      dplyr::mutate(times_cited_all_databases = ntile(log(times_cited_all_databases), 20)), "results/map/map_city_citation_publications.xlsx")
 ggsave(plot = worldHDI2, filename = "results/map/map_city_citation_publications.png", units = "in", dpi = 300, width = 20, height = 12)
 
 
@@ -842,8 +849,14 @@ worldHDI2 <- plot_mapdata_usa_pub(df_world_city3 %>%
                                     dplyr::filter(country.etc == "USA") %>%
                                     dplyr::mutate(times_cited_all_databases = ntile(log(times_cited_all_databases, 10), 20)))
 ## Plot citations
+writexl::write_xlsx(df_world_city3 %>%
+                      dplyr::filter(country.etc == "USA") %>%
+                      dplyr::mutate(times_cited_all_databases = ntile(log(times_cited_all_databases), 20)), "results/map/map_city_USA_citation.xlsx")
 ggsave(plot = worldHDI1, filename = "results/map/map_city_USA_citations.png", units = "in", dpi = 300, width = 10, height = 8)
 ## Plot publications
+writexl::write_xlsx(df_world_city3 %>%
+                      dplyr::filter(country.etc == "USA") %>%
+                      dplyr::mutate(times_cited_all_databases = ntile(log(times_cited_all_databases, 10), 20)), "results/map/map_city_USA_citation.xlsx")
 ggsave(plot = worldHDI2, filename = "results/map/map_city_USA_publications.png", units = "in", dpi = 300, width = 10, height = 7)
 
 
@@ -862,8 +875,14 @@ worldHDI2 <- plot_mapdata_eu_pub(df_world_city3 %>%
                                    dplyr::filter(country.etc %in% states$region) %>%
                                    dplyr::mutate(times_cited_all_databases = ntile(log(times_cited_all_databases), 20)))
 ## Plot citations
+writexl::write_xlsx(df_world_city3 %>%
+                      dplyr::filter(country.etc %in% states$region) %>%
+                      dplyr::mutate(times_cited_all_databases = ntile(log(times_cited_all_databases), 20)), "results/map/map_city_Europe_citation.xlsx")
 ggsave(plot = worldHDI, filename = "results/map/map_city_Europe.png", units = "in", dpi = 300, width = 10, height = 10)
 ## Plot publications
+writexl::write_xlsx(df_world_city3 %>%
+                      dplyr::filter(country.etc %in% states$region) %>%
+                      dplyr::mutate(times_cited_all_databases = ntile(log(times_cited_all_databases), 20)), "results/map/map_city_Europe_citation.xlsx")
 ggsave(plot = worldHDI2, filename = "results/map/map_city_Europe_publications.png", units = "in", dpi = 300, width = 10, height = 10)
 
 
@@ -909,6 +928,7 @@ g <- ggplot(df_world_city4 %>% dplyr::filter(!is.na(capital)) %>% dplyr::filter(
         legend.text = element_text(size=14, colour = "black"),
         legend.key = element_rect(color="black"),
         legend.position = "NULL")
+writexl::write_xlsx(df_world_city4 %>% dplyr::filter(!is.na(capital)) %>% dplyr::filter(country.etc %in% df_world_city4_countries), "results/capital/Boxplot_capital.xlsx")
 ggsave(plot = g, "results/capital/Boxplot_capital_n_citations.png", width = 4, height = 4, units = "in", dpi = 300)
 
 g <- ggplot(df_world_city4 %>% dplyr::filter(!is.na(capital)) %>% dplyr::filter(country.etc %in% df_world_city4_countries), aes(x = capital, y = log(n_articles, 10))) +
@@ -990,6 +1010,7 @@ for (i in unique(df_world[!is.na(df_world$continent),]$continent)) {
           legend.text = element_text(size=14, colour = "black"),
           legend.key = element_rect(color="black"),
           legend.position = "NULL")
+  writexl::write_xlsx(df_world_city4 %>% dplyr::filter(country.etc %in% tmp$region) %>% dplyr::filter(!is.na(capital)) %>% dplyr::filter(country.etc %in% df_world_city4_countries), paste0("results/capital/Boxplot_capital_", i, ".xlsx"))
   ggsave(plot = g, paste0("results/capital/Boxplot_capital_n_citations_", i, ".png"), width = 4, height = 4, units = "in", dpi = 300)
   
   ## N of articles
@@ -1037,6 +1058,7 @@ for (i in unique(df_world[!is.na(df_world$continent),]$continent)) {
   ggsave(plot = g, paste0("results/capital/Boxplot_capital_n_citations_per_articles_", i, ".png"), width = 4, height = 4, units = "in", dpi = 300)
   
 }
+
 
 ########################################## GENDER STATISTICS ##########################################
 
@@ -1153,8 +1175,10 @@ givenNames1 <- rbind(givenNames0, givenNames)
 ## Save for future use
 saveRDS(givenNames1, "data/combined_names.rds")
 ## Rename female to Women and male to Men
+# givenNames1 = givenNames
+givenNames1 = readRDS("data/combined_names.rds")
 givenNames1$gender = ifelse(givenNames1$gender=="male", "Men", ifelse(givenNames1$gender=="female", "Women", givenNames1$gender))
-  
+
 
 # Keep genders
 df_authors1 <- df_authors1 %>%
@@ -1171,6 +1195,7 @@ df_authors1 <- df_authors1 %>%
   dplyr::rename(author_last_gender = gender)
 ## Combine with df
 df <- cbind(df, df_authors1)
+
 ## Factor
 df$author_first_gender = factor(df$author_first_gender, levels = c("Women", "Men"))
 df$author_second_gender = factor(df$author_second_gender, levels = c("Women", "Men"))
@@ -1243,6 +1268,7 @@ g <- ggplot(df %>% dplyr::filter(!is.na(author_first_gender)), aes(x = author_fi
         legend.text = element_text(size=14, colour = "black"),
         legend.key = element_rect(color="black"),
         legend.position = "NULL")
+writexl::write_xlsx(df %>% dplyr::select(author_first_gender, author_second_gender, author_second_last_gender, author_last_gender, times_cited_all_databases), "results/gender/Boxplot_n_citations_author_gender.xlsx")
 ggsave(plot = g, "results/gender/Boxplot_n_citations_first_author_gender.png", width = 4, height = 4, units = "in", dpi = 300)
 
 g <- ggplot(df %>% dplyr::filter(!is.na(author_second_gender)), aes(x = author_second_gender, y = log(times_cited_all_databases, 10))) +
@@ -1543,6 +1569,7 @@ g <- ggplot(df_sr %>% dplyr::filter(!is.na(author_first_gender)), aes(x = author
         legend.text = element_text(size=14, colour = "black"),
         legend.key = element_rect(color="black"),
         legend.position = "NULL")
+writexl::write_xlsx(df_sr, "results/gender/Barplot_n_articles_author_gender.xlsx")
 ggsave(plot = g, "results/gender/Barplot_n_articles_first_author_gender.png", width = 5, height = 4, units = "in", dpi = 300)
 
 ### Second author
@@ -1637,6 +1664,7 @@ g <- ggplot(df_gender_sr, aes(x = author_first_gender, y=Freq, fill=author_last_
         legend.text = element_text(size=12, colour = "black"),
         legend.key = element_rect(color="black"),
         legend.position = "bottom")
+writexl::write_xlsx(df_gender_sr, "results/gender/Barplot_first_last_author_gender.xlsx")
 ggsave(plot = g, "results/gender/Barplot_first_last_author_gender.png", width = 3, height = 4, units = "in", dpi = 300)
 
 
@@ -1646,11 +1674,7 @@ ggsave(plot = g, "results/gender/Barplot_first_last_author_gender.png", width = 
 # Modify data
 df <- df %>%
   dplyr::mutate(number_of_pages_cat = ifelse(number_of_pages > median(number_of_pages, na.rm=TRUE), ">10", "≤10"),
-                authors_tmp_cat = ifelse(authors_tmp > median(authors_tmp, na.rm=TRUE), ">11", "≤11"),
-                author_first_gender = tools::toTitleCase(author_first_gender),
-                author_second_gender = tools::toTitleCase(author_second_gender),
-                author_second_last_gender = tools::toTitleCase(author_second_last_gender),
-                author_last_gender = tools::toTitleCase(author_last_gender))
+                authors_tmp_cat = ifelse(authors_tmp > median(authors_tmp, na.rm=TRUE), ">11", "≤11"))
 
 # Citations ~ Gender + Number of pages
 for (i in c("author_first_gender", "author_last_gender")) {
@@ -1673,7 +1697,7 @@ for (i in c("author_first_gender", "author_last_gender")) {
       labs(y="# Citations (LOG10)", x=xlab) +
       scale_fill_brewer(palette="Set1", name="Gender") +
       theme_bw() +
-      stat_compare_means(method = "wilcox.test",                       label = "p.signif",
+      stat_compare_means(method = "wilcox.test", label = "p.signif",
                          label.x = 1.45,
                          size = 6) +
       theme_bw() +
@@ -1688,6 +1712,7 @@ for (i in c("author_first_gender", "author_last_gender")) {
     
   }
 }
+writexl::write_xlsx(df %>% dplyr::select(author_first_gender, author_last_gender, number_of_pages_cat, authors_tmp_cat, times_cited_all_databases), "results/gender/Boxplot_citations_gender.xlsx")
 
 
 ########################################## GENDER BY COUNTRIES ##########################################
@@ -1789,6 +1814,7 @@ p <- ggballoonplot(df_plot1, y = "Author", x = "Country",
         legend.text = element_text(size=10, colour="black"),
         legend.position = "bottom", legend.direction = "horizontal", legend.box="horizontal", legend.margin=margin())
 p
+writexl::write_xlsx(df_plot1, "results/gender/Balloonplot_gender_country.xlsx")
 ggsave(plot = p, filename = "results/gender/Balloonplot_gender_country.png", width = 8, height = 3.5, units = "in", dpi = 300)
 
 
@@ -1929,6 +1955,7 @@ top20 <- ggplot(pvalue_df_first_top10_first, aes(fill = F_to_M_first, ymax = yma
         axis.ticks = element_blank(),
         panel.border = element_blank(),
         panel.background = element_blank())
+writexl::write_xlsx(pvalue_df_first_top10_first, "results/gender/keywords_top20_first_author.xlsx")
 ggsave(plot = top20, filename = "results/gender/keywords_top20_first_author.png", width = 8, height = 8, units = "in", dpi = 300)
 
 
@@ -1962,6 +1989,7 @@ top20 <- ggplot(pvalue_df_first_low10_first, aes(fill = F_to_M_first, ymax = yma
         axis.ticks = element_blank(),
         panel.border = element_blank(),
         panel.background = element_blank())
+writexl::write_xlsx(pvalue_df_first_low10_first, "results/gender/keywords_low20_first_author.xlsx")
 ggsave(plot = top20, filename = "results/gender/keywords_low20_first_author.png", width = 8, height = 8, units = "in", dpi = 300)
 
 
@@ -1995,6 +2023,7 @@ top20 <- ggplot(pvalue_df_first_top10_last, aes(fill = F_to_M_last, ymax = ymax,
         axis.ticks = element_blank(),
         panel.border = element_blank(),
         panel.background = element_blank())
+writexl::write_xlsx(pvalue_df_first_top10_last, "results/gender/keywords_first20_last_author.xlsx")
 ggsave(plot = top20, filename = "results/gender/keywords_top20_last.png", width = 8, height = 8, units = "in", dpi = 300)
 
 
@@ -2028,6 +2057,7 @@ top20 <- ggplot(pvalue_df_first_low10_last, aes(fill = F_to_M_last, ymax = ymax,
         axis.ticks = element_blank(),
         panel.border = element_blank(),
         panel.background = element_blank())
+writexl::write_xlsx(pvalue_df_first_low10_last, "results/gender/keywords_low20_last_author.xlsx")
 ggsave(plot = top20, filename = "results/gender/keywords_low20_last.png", width = 8, height = 8, units = "in", dpi = 300)
 
 
@@ -2093,6 +2123,7 @@ plt <- ggplot() +
         panel.background = element_blank())
 g <- plt + coord_polar(theta = "y") 
 g
+writexl::write_xlsx(pvalue_df_first_top10_last2, "results/gender/keywords_first20_combined.xlsx")
 ggsave(plot = g, filename = "results/gender/keywords_first20_combined.png", width = 10, height = 8, units = "in", dpi = 300)
 
 
@@ -2150,6 +2181,7 @@ plt <- ggplot() +
         panel.border = element_blank(),
         panel.background = element_blank())
 g <- plt + coord_polar(theta = "y") 
+writexl::write_xlsx(pvalue_df_first_low10_first2, "results/gender/keywords_low20_combined.xlsx")
 ggsave(plot = g, filename = "results/gender/keywords_low20_combined.png", width = 10, height = 8, units = "in", dpi = 300)
 
 tt <- data.frame(x=1, y=1)
@@ -2171,6 +2203,7 @@ plt <- ggplot() +
         panel.border = element_blank(),
         panel.background = element_blank())
 g <- plt + coord_polar(theta = "y") 
+writexl::write_xlsx(pvalue_df_first_low10_first2, "results/gender/keywords_combined_legend.xlsx")
 ggsave(plot = g, filename = "results/gender/keywords_combined_legend.png", width = 4, height = 4, units = "in", dpi = 300)
 
 
@@ -2212,6 +2245,7 @@ g <- ggplot(pvalue_df_first1_spiral,
         axis.ticks = element_blank(),
         panel.border = element_blank(),
         panel.background = element_blank())
+writexl::write_xlsx(pvalue_df_first1_spiral, "results/gender/keywords_all_author.xlsx")
 ggsave(plot = g, filename = "results/gender/keywords_all_first_author.png", width = 6, height = 6, units = "in", dpi = 300)
 
 
@@ -2239,32 +2273,32 @@ g <- ggplot(pvalue_df_first1_spiral,
 ggsave(plot = g, filename = "results/gender/keywords_all_last_author.png", width = 6, height = 6, units = "in", dpi = 300)
 
 
-
 ########################################## REGRESSION MODEL ##########################################
 
 
-df$times_cited_all_databases_log <- as.numeric(gsub("Inf", 0, log(df$times_cited_all_databases, 10)))
-model <- lm(times_cited_all_databases_log ~ author_first_gender, data = df)
+df1 = df
+df1$times_cited_all_databases_log <- as.numeric(gsub("Inf", 0, log(df1$times_cited_all_databases, 10)))
+model <- lm(times_cited_all_databases_log ~ author_first_gender, data = df1)
 summary(model)
-model <- lm(times_cited_all_databases_log ~ author_last_gender, data = df)
+model <- lm(times_cited_all_databases_log ~ author_last_gender, data = df1)
 summary(model)
-model <- lm(times_cited_all_databases_log ~ authors_tmp, data = df)
+model <- lm(times_cited_all_databases_log ~ authors_tmp, data = df1)
 summary(model)
-model <- lm(times_cited_all_databases_log ~ number_of_pages, data = df)
+model <- lm(times_cited_all_databases_log ~ number_of_pages, data = df1)
 summary(model)
-model <- lm(times_cited_all_databases_log ~ author_first_gender + number_of_pages, data = df)
+model <- lm(times_cited_all_databases_log ~ author_first_gender + number_of_pages, data = df1)
 summary(model)
-model <- lm(times_cited_all_databases_log ~ author_first_gender + number_of_pages + author_first_gender*number_of_pages, data = df)
+model <- lm(times_cited_all_databases_log ~ author_first_gender + number_of_pages + author_first_gender*number_of_pages, data = df1)
 summary(model)
-model <- lm(times_cited_all_databases_log ~ author_first_gender + authors_tmp, data = df)
+model <- lm(times_cited_all_databases_log ~ author_first_gender + authors_tmp, data = df1)
 summary(model)
-model <- lm(times_cited_all_databases_log ~ author_first_gender + authors_tmp + author_first_gender*authors_tmp, data = df)
+model <- lm(times_cited_all_databases_log ~ author_first_gender + authors_tmp + author_first_gender*authors_tmp, data = df1)
 summary(model)
-model <- lm(times_cited_all_databases_log ~ author_last_gender, data = df)
+model <- lm(times_cited_all_databases_log ~ author_last_gender, data = df1)
 summary(model)
-model <- lm(times_cited_all_databases_log ~ author_last_gender + authors_tmp, data = df)
+model <- lm(times_cited_all_databases_log ~ author_last_gender + authors_tmp, data = df1)
 summary(model)
-model <- lm(times_cited_all_databases_log ~ author_last_gender + authors_tmp + author_last_gender*authors_tmp, data = df)
+model <- lm(times_cited_all_databases_log ~ author_last_gender + authors_tmp + author_last_gender*authors_tmp, data = df1)
 summary(model)
 
 
@@ -2272,6 +2306,7 @@ summary(model)
 
 
 # City columns
+df$tmp <- NULL; df$tmp1 <- NULL
 tt <- df %>% dplyr::select(starts_with("City_")) %>% length()
 tt1 <- which(colnames(df) == paste0("City_", tt))+1
 tt2 <- which(colnames(df) == paste0("Country_1"))-1
@@ -2338,8 +2373,8 @@ dupl_cities1$dupl <- ifelse(!is.na(dupl_cities1$dupl), paste0(dupl_cities1$City,
 
 # Split Country_to_fix by , to multiple columns
 dupl_cities1 <- cbind(dupl_cities1, dupl_cities1 %>%
-  bind_cols(split_into_multiple(.$Country_to_fix, ",", "Country_to_fix")) %>%
-  select(starts_with("Country_to_fix_"))) %>%
+                        bind_cols(split_into_multiple(.$Country_to_fix, ",", "Country_to_fix")) %>%
+                        select(starts_with("Country_to_fix_"))) %>%
   dplyr::select(-Country_to_fix)
 
 # Specify the country for the rest by using regex and corresponding addresses
@@ -2377,7 +2412,9 @@ for (i in dupl_cities1[!is.na(dupl_cities1$dupl),]$City) {
 df <- cbind(
   cbind(
     df[1:(which(colnames(df) == "Country_1")-1)],
-    df[(which(colnames(df) == "authors_tmp_cat")+1):ncol(df)]),
+  #   df[1063:1092]),
+  # df[which(colnames(df) == "Country_1"):which(colnames(df) == "Zimbabwe")])
+  df[(which(colnames(df) == "authors_tmp_cat")+1):ncol(df)]),
   df[which(colnames(df) == "Country_1"):which(colnames(df) == "authors_tmp_cat")])
 # Remove old cities
 df <- df %>% dplyr::select(-one_of(dupl_cities1[is.na(dupl_cities1$dupl),]$City))
@@ -2395,6 +2432,7 @@ df_city <- df[tt1:tt2]
 # Country columns
 tt <- df %>% dplyr::select(starts_with("Country_")) %>% length()
 tt1 <- which(colnames(df) == paste0("Country_", tt))+1
+tt2 <- which(colnames(df) == paste0("Country_15"))
 tt2 <- which(colnames(df) == paste0("author_first"))-1
 df_city_country <- df[tt1:tt2]
 
@@ -2407,11 +2445,13 @@ df_city1 <- df_city[which(ww==TRUE)]
 
 
 # Cbind
-df_city1 <- cbind(df %>% dplyr::select(times_cited_all_databases, authors_tmp, ends_with("gender"), number_of_pages), df_city1)
+df_city1 <- cbind(df %>% dplyr::select(starts_with("times_cited_all_databases"), authors_tmp, ends_with("gender"), number_of_pages), df_city1)
 df_city1$tmp <- NULL
 
 ### Mann-Whitney U test
 w <- colnames(df_city1[(which(colnames(df_city1)=="number_of_pages")+1):ncol(df_city1)])
+df_city1[w] = sapply(df_city1[w], as.integer)
+w = w[sapply(df_city1[w], function(x) length(unique(x))) %in% c(2,3)]
 multiple_t_tests_p_value <- lapply(df_city1[w], function(x) wilcox.test(df_city1$times_cited_all_databases ~ x, na.rm=TRUE, exact=FALSE))
 ### P-values can be extracted from the result object
 pvalue <- data.frame(p.value = sapply(multiple_t_tests_p_value, getElement, name = "p.value"))
@@ -2434,7 +2474,7 @@ rownames(pvalue_df_first) = NULL
 
 # Summarise
 df_city1_long <- df_city1 %>% 
-  melt(id.vars = 1:7, variable.name = "City")
+  melt(id.vars = 1:which(colnames(df_city1) == "number_of_pages"), variable.name = "City")
 df_city1_sr1 <- df_city1_long %>%
   dplyr::group_by(City, value) %>%
   summarise_at(vars("times_cited_all_databases", "authors_tmp", "number_of_pages"), median, na.rm=TRUE)
@@ -2523,13 +2563,12 @@ df_city1_sr_1$City <- gsub("France", "FR",
 
 
 # Plot
-g <- ggplot(df_city1_sr_1, aes(y = log(n, 10), x = log(times_cited_all_databases_sum, 10),
-                               label = paste0(City, "\n", scales::percent(n_articles_diff_prop)))) +
+g <- ggplot(df_city1_sr_1, aes(y = log(n, 10), x = log(times_cited_all_databases_sum, 10))) +
   geom_point(aes(fill=log(n_per_pop, 10), size=-n_articles_diff), shape = 21, color="black", alpha = 0.85) +
   stat_smooth(method = "lm") +
   geom_label_repel(data = df_city1_sr_1[log(df_city1_sr_1$times_cited_all_databases_sum, 10)>4 | df_city1_sr_1$achiever2 <= quantile(df_city1_sr_1$achiever2, 0.10) | df_city1_sr_1$achiever2 >= quantile(df_city1_sr_1$achiever2, 0.9),],
-                   aes(color=achiever3),
-                   min.segment.length = 0, seed = 42, box.padding = 1) +
+                   aes(color=achiever3, label = paste0(City, "\n", scales::percent(n_articles_diff_prop, accuracy = 1))),
+                   min.segment.length = 0, seed = 42, box.padding = 1, max.overlaps = 100) +
   scale_fill_distiller(palette = "RdBu", direction = -1, name="# Publications/1 000 000 people (LOG10)") +
   scale_color_brewer(palette = "Set1", direction = 1, guide = "none") +
   scale_size(range = c(1, 20), name="# Publication excess", breaks = c(10, 100, 500)) +  # , guide = "none"
@@ -2546,9 +2585,10 @@ g <- ggplot(df_city1_sr_1, aes(y = log(n, 10), x = log(times_cited_all_databases
         legend.box = 'vertical',
         legend.spacing.y = unit(0.1, 'cm'),
         legend.position = "bottom")
+writexl::write_xlsx(df_city1_sr_1, "results/publications/Correlation_publications_articles_city.xlsx")
 ggsave(plot = g, filename = "results/publications/Correlation_publications_articles_city.png", width = 8, height = 9, dpi = 300, units = "in")
 
-  
+
 ########################################## STATISTICS OF JOURNALS AND THEIR NATIONALITES ##########################################
 
 
@@ -2702,6 +2742,7 @@ g <- ggplot(pvalue_df_journals %>% dplyr::filter(Journal=="NEJM"), aes(x = reord
         legend.text = element_text(size=14, colour = "black"),
         legend.key = element_rect(color="black"),
         legend.position = "NULL")
+writexl::write_xlsx(pvalue_df_journals, "results/journals/Barplot_publications.xlsx")
 ggsave(plot = g, "results/journals/Barplot_publications_nejm.png", width = 10, height = 4, units = "in", dpi = 300)
 
 
@@ -2838,6 +2879,7 @@ g <- ggplot(pvalue_df_country2, aes(x = Journal, y = Prop, fill=Journal)) +
         legend.key = element_rect(color="black"),
         legend.position = "NULL") +
   facet_wrap("Country1", scales = "free", nrow = 2)
+writexl::write_xlsx(pvalue_df_country2, "results/journals/Barplot_publications_all.xlsx")
 ggsave(plot = g, "results/journals/Barplot_publications_all.png", width = 10, height = 4, units = "in", dpi = 300)
 
 
@@ -2883,7 +2925,7 @@ pvalue_df_gender_journal3 <- pvalue_df_gender_journal3 %>%
                                  ifelse(Journal=="NAT MED", "NATMED",
                                         ifelse(Journal=="BMJ BRIT MED J", "BMJ",
                                                ifelse(Journal=="NEW ENGL J MED", "NEJM", "LANCET"))))) %>%
-  dplyr::mutate(gender = tools::toTitleCase(gender))
+  dplyr::mutate(gender = gender)
 ### Transform to proportions and keep only women data
 pvalue_df_gender_journal3_plot <- pvalue_df_gender_journal3 %>%
   dplyr::filter(gender == "Women") %>%
@@ -2907,7 +2949,7 @@ g <- ggplot(pvalue_df_gender_journal3_plot, aes(x = Journal, y = Prop, fill=Jour
   scale_fill_brewer(palette="Set1", name="Author") +
   geom_text(aes(label = pvalue, x=3, y = 0.875*(max(round(pvalue_df_gender_journal3_plot$Prop/10, 0)*10)+10)), size=4, vjust = -0.1, colour = "black") +
   geom_text(aes(label = ifelse(str_detect(round(Prop, 1), "\\."), round(Prop, 1), paste0(round(Prop, 1), ".0")),
-                               x=Journal, y = Prop), size=2.75, vjust = -0.3, colour = "black") +
+                x=Journal, y = Prop), size=2.75, vjust = -0.3, colour = "black") +
   # scale_fill_distiller(palette = "Spectral", name="Country") +
   theme_bw() +
   theme(axis.text.x = element_text(size=12, colour = "black", angle = 45, hjust = 1),
@@ -2919,6 +2961,7 @@ g <- ggplot(pvalue_df_gender_journal3_plot, aes(x = Journal, y = Prop, fill=Jour
         legend.key = element_rect(color="black"),
         legend.position = "NULL") +
   facet_wrap("Author", nrow = 1)
+writexl::write_xlsx(pvalue_df_gender_journal3_plot, "results/journals/Gender_publications_all.xlsx")
 ggsave(plot = g, "results/journals/Gender_publications_all.png", width = 6, height = 2.75, units = "in", dpi = 300)
 
 
@@ -2954,8 +2997,7 @@ for (i in c("author_first_gender", "author_last_gender", "authors_tmp_cat")) {  
     summarise(times_cited_all_databases = median(times_cited_all_databases),
               n=n()) %>%
     ungroup() %>%
-    dplyr::mutate(publication_year = factor(publication_year),
-                  tmp = tools::toTitleCase(tmp))
+    dplyr::mutate(publication_year = factor(publication_year))
   
   # Statistics
   df_plot1 <- df_plot %>% 
@@ -2998,10 +3040,10 @@ for (i in c("author_first_gender", "author_last_gender", "authors_tmp_cat")) {  
     ylab("# Citations/# Publication by year") +
     geom_point(aes(fill = tmp), size=4, col="black", shape=21) +
     geom_text(data=zz[2,], aes(label = paste0("Slope ", round(Slope, 2))),
-             x = 1,
-             vjust = "inward", hjust = "inward",
-             y = max(df_plot$times_cited_all_databases),
-             size = 5, colour = "#377eb8"
+              x = 1,
+              vjust = "inward", hjust = "inward",
+              y = max(df_plot$times_cited_all_databases),
+              size = 5, colour = "#377eb8"
     ) +
     geom_text(data=zz[1,], aes(label = paste0("Slope ", round(Slope, 2))),
               x = 1,
@@ -3013,9 +3055,9 @@ for (i in c("author_first_gender", "author_last_gender", "authors_tmp_cat")) {  
     scale_fill_brewer(palette="Set1", name=str_to_sentence(gsub("author last", "last author",
                                                                 gsub("author first", "first author",
                                                                      # gsub("gender", "sex",
-                                                                          gsub("number of pages cat", "# Pages",
-                                                                               gsub("authors tmp cat", "# Authors",
-                                                                                    gsub("_", " ", i))))))) +
+                                                                     gsub("number of pages cat", "# Pages",
+                                                                          gsub("authors tmp cat", "# Authors",
+                                                                               gsub("_", " ", i))))))) +
     guides(color = FALSE,
            fill = guide_legend(override.aes = list(size=8), order=1)) +
     theme_bw() +
@@ -3029,6 +3071,7 @@ for (i in c("author_first_gender", "author_last_gender", "authors_tmp_cat")) {  
           legend.box = "vertical",
           legend.direction = "horizontal")
   g
+  writexl::write_xlsx(df_plot, paste0("results/time/", i, "_citations_by_year.xlsx"))
   ggsave(plot = g, filename = paste0("results/time/", i, "_citations_by_publication_year.png"), width = 5.5, height = 5, units = "in", dpi = 300)
   
   # Plot 2
@@ -3054,9 +3097,9 @@ for (i in c("author_first_gender", "author_last_gender", "authors_tmp_cat")) {  
     scale_fill_brewer(palette="Set1", name=str_to_sentence(gsub("author last", "last author",
                                                                 gsub("author first", "first author",
                                                                      # gsub("gender", "sex",
-                                                                          gsub("number of pages cat", "# Pages",
-                                                                               gsub("authors tmp cat", "# Authors",
-                                                                                    gsub("_", " ", i))))))) +
+                                                                     gsub("number of pages cat", "# Pages",
+                                                                          gsub("authors tmp cat", "# Authors",
+                                                                               gsub("_", " ", i))))))) +
     guides(color = FALSE,
            fill = guide_legend(override.aes = list(size=8))) +
     theme_bw() +
@@ -3078,93 +3121,93 @@ for (i in c("author_first_gender", "author_last_gender", "authors_tmp_cat")) {  
         # j="Men"; k="author_first_gender"
         df$tmp1 <- df[[k]]
         
-    # Summarise
-    df_plot <- df %>%
-      dplyr::filter(!is.na(tmp)) %>%
-      dplyr::filter(tmp1 == j) %>%
-      group_by(tmp, publication_year) %>%
-      summarise(times_cited_all_databases = median(times_cited_all_databases),
-                n=n()) %>%
-      ungroup() %>%
-      dplyr::mutate(publication_year = factor(publication_year),
-                    tmp = tools::toTitleCase(tmp))
-    
-    # Statistics
-    df_plot1 <- df_plot %>% 
-      mutate(publication_year = as.numeric(as.character(publication_year))-2009)
-    
-    ## Citations
-    zz <- df_plot1 %>% 
-      group_by(tmp) %>% 
-      do({
-        mod = lm(times_cited_all_databases ~ publication_year, data = .)
-        data.frame(Intercept = coef(mod)[1],
-                   Slope = coef(mod)[2])
-      })
-    print(zz)
-    
-    fit1 = lm(times_cited_all_databases ~ publication_year*tmp, data=df_plot1)
-    print(summary(fit1)$call)
-    print(summary(fit1))
-    
-    
-    ## Number of publications
-    zz1 <- df_plot1 %>% 
-      group_by(tmp) %>% 
-      do({
-        mod = lm(n ~ publication_year, data = .)
-        data.frame(Intercept = coef(mod)[1],
-                   Slope = coef(mod)[2])
-      })
-    print(zz1)
-    
-    fit2 = lm(n ~ publication_year*tmp, data=df_plot1)
-    print(summary(fit2)$call)
-    print(summary(fit2))
-    
-    
-    g <- ggplot(data = df_plot, aes(x = publication_year, y = n, group = tmp)) +
-      geom_line(size = 1.5) +
-      geom_smooth(method="lm", aes(col = tmp), size = 2) +
-      xlab("Publication year") +
-      ylab("# Publications by year") +
-      geom_point(aes(fill = tmp), size=4, col="black", shape=21) +
-      geom_text(data=zz1[2,], aes(label = paste0("Slope ", round(Slope, 2))),
-                x = 10,
-                vjust = "inward", hjust = "inward",
-                y = max(df_plot$n),
-                size = 5, colour = "#377eb8"
-      ) +
-      geom_text(data=zz1[1,], aes(label = paste0("Slope ", round(Slope, 2))),
-                x = 10,
-                vjust = "inward", hjust = "inward",
-                y = max(df_plot$n)-0.05*max(df_plot$n),
-                size = 5, colour = "#e41a1c"
-      ) +
-      scale_color_brewer(palette="Set1") +
-      scale_fill_brewer(palette="Set1", name=str_to_sentence(gsub("author last", "last author",
-                                                                  gsub("author first", "first author",
-                                                                       # gsub("gender", "sex",
-                                                                       gsub("number of pages cat", "# Pages",
-                                                                            gsub("authors tmp cat", "# Authors",
-                                                                                 gsub("_", " ", i))))))) +
-      guides(color = FALSE,
-             fill = guide_legend(override.aes = list(size=8))) +
-      theme_bw() +
-      theme(axis.text.x = element_text(size=14, colour = "black", angle = 45, hjust = 1),
-            axis.text.y = element_text(size=14, colour = "black"),
-            axis.title.y = element_text(size=14, face="bold", colour = "black"),
-            axis.title.x = element_text(size=14, face="bold", colour = "black"),
-            legend.title = element_text(size=14, face="bold", colour = "black"),
-            legend.text = element_text(size=14, colour = "black"),
-            legend.position = "bottom",
-            legend.box = "vertical",
-            legend.direction = "horizontal")
-    g
-    ggsave(plot = g, filename = paste0("combined_noncovid/results/time/", i, "_", j, "_", k, "_publications_by_publication_year.png"), width = 5.5, height = 5, units = "in", dpi = 300)
-    
-    df$tmp1 <- NULL
-    
+        # Summarise
+        df_plot <- df %>%
+          dplyr::filter(!is.na(tmp)) %>%
+          dplyr::filter(tmp1 == j) %>%
+          group_by(tmp, publication_year) %>%
+          summarise(times_cited_all_databases = median(times_cited_all_databases),
+                    n=n()) %>%
+          ungroup() %>%
+          dplyr::mutate(publication_year = factor(publication_year))
+        
+        # Statistics
+        df_plot1 <- df_plot %>% 
+          mutate(publication_year = as.numeric(as.character(publication_year))-2009)
+        
+        ## Citations
+        zz <- df_plot1 %>% 
+          group_by(tmp) %>% 
+          do({
+            mod = lm(times_cited_all_databases ~ publication_year, data = .)
+            data.frame(Intercept = coef(mod)[1],
+                       Slope = coef(mod)[2])
+          })
+        print(zz)
+        
+        fit1 = lm(times_cited_all_databases ~ publication_year*tmp, data=df_plot1)
+        print(summary(fit1)$call)
+        print(summary(fit1))
+        
+        
+        ## Number of publications
+        zz1 <- df_plot1 %>% 
+          group_by(tmp) %>% 
+          do({
+            mod = lm(n ~ publication_year, data = .)
+            data.frame(Intercept = coef(mod)[1],
+                       Slope = coef(mod)[2])
+          })
+        print(zz1)
+        
+        fit2 = lm(n ~ publication_year*tmp, data=df_plot1)
+        print(summary(fit2)$call)
+        print(summary(fit2))
+        
+        
+        g <- ggplot(data = df_plot, aes(x = publication_year, y = n, group = tmp)) +
+          geom_line(size = 1.5) +
+          geom_smooth(method="lm", aes(col = tmp), size = 2) +
+          xlab("Publication year") +
+          ylab("# Publications by year") +
+          geom_point(aes(fill = tmp), size=4, col="black", shape=21) +
+          geom_text(data=zz1[2,], aes(label = paste0("Slope ", round(Slope, 2))),
+                    x = 10,
+                    vjust = "inward", hjust = "inward",
+                    y = max(df_plot$n),
+                    size = 5, colour = "#377eb8"
+          ) +
+          geom_text(data=zz1[1,], aes(label = paste0("Slope ", round(Slope, 2))),
+                    x = 10,
+                    vjust = "inward", hjust = "inward",
+                    y = max(df_plot$n)-0.05*max(df_plot$n),
+                    size = 5, colour = "#e41a1c"
+          ) +
+          scale_color_brewer(palette="Set1") +
+          scale_fill_brewer(palette="Set1", name=str_to_sentence(gsub("author last", "last author",
+                                                                      gsub("author first", "first author",
+                                                                           # gsub("gender", "sex",
+                                                                           gsub("number of pages cat", "# Pages",
+                                                                                gsub("authors tmp cat", "# Authors",
+                                                                                     gsub("_", " ", i))))))) +
+          guides(color = FALSE,
+                 fill = guide_legend(override.aes = list(size=8))) +
+          theme_bw() +
+          theme(axis.text.x = element_text(size=14, colour = "black", angle = 45, hjust = 1),
+                axis.text.y = element_text(size=14, colour = "black"),
+                axis.title.y = element_text(size=14, face="bold", colour = "black"),
+                axis.title.x = element_text(size=14, face="bold", colour = "black"),
+                legend.title = element_text(size=14, face="bold", colour = "black"),
+                legend.text = element_text(size=14, colour = "black"),
+                legend.position = "bottom",
+                legend.box = "vertical",
+                legend.direction = "horizontal")
+        g
+        writexl::write_xlsx(df_plot, paste0("results/time/", i, "_", j, "_", k, "_publications_by_year.xlsx"))
+        ggsave(plot = g, filename = paste0("results/time/", i, "_", j, "_", k, "_publications_by_publication_year.png"), width = 5.5, height = 5, units = "in", dpi = 300)
+        
+        df$tmp1 <- NULL
+        
       }
     }
   }
@@ -3188,13 +3231,12 @@ for (i in c("author_first_gender", "author_last_gender")) {
     summarise(times_cited_all_databases = median(times_cited_all_databases),
               n=n()) %>%
     ungroup() %>%
-    dplyr::mutate(publication_year = factor(publication_year),
-                  tmp = tools::toTitleCase(tmp))
+    dplyr::mutate(publication_year = factor(publication_year))
   df_plot <- df_plot %>%
     arrange(desc(n))
   df_plot <- df_plot %>%
     dplyr::mutate(Country = factor(Country, levels = unique(df_plot$Country)))
-
+  
   # Statistics
   df_plot1 <- df_plot %>% 
     mutate(publication_year = as.numeric(as.character(publication_year))-2009)
@@ -3239,9 +3281,9 @@ for (i in c("author_first_gender", "author_last_gender")) {
     scale_fill_brewer(palette="Set1", name=str_to_sentence(gsub("author last", "last author",
                                                                 gsub("author first", "first author",
                                                                      # gsub("gender", "sex",
-                                                                          gsub("number of pages cat", "# Pages",
-                                                                               gsub("authors tmp cat", "# Authors",
-                                                                                    gsub("_", " ", i))))))) +
+                                                                     gsub("number of pages cat", "# Pages",
+                                                                          gsub("authors tmp cat", "# Authors",
+                                                                               gsub("_", " ", i))))))) +
     guides(color = FALSE,
            fill = guide_legend(override.aes = list(size=8), order=1)) +
     theme_bw() +
@@ -3256,10 +3298,10 @@ for (i in c("author_first_gender", "author_last_gender")) {
           legend.box = "vertical",
           legend.direction = "horizontal") +
     facet_wrap("Country", scales = "free")
+  writexl::write_xlsx(df_plot, paste0("results/time/", i, "_citations_by_publication_year_by_country.xlsx"))
   ggsave(plot = g, filename = paste0("results/time/", i, "_citations_by_publication_year_by_country.png"), width = 20, height = 15, units = "in", dpi = 300)
 }
 
-df[df$number_of_pages==86,]$authors_tmp
 cor.test(df$authors_tmp, df$number_of_pages, method="spearman")
 
 
@@ -3342,6 +3384,7 @@ g <- ggplot(data = df_plot, aes(x = publication_year, y = med)) +
         legend.box = "vertical",
         legend.direction = "horizontal")
 g
+writexl::write_xlsx(df_plot, "results/time/Corplot_authors_and_pages_by_publication_year.xlsx")
 ggsave(plot = g, filename = "results/time/Corplot_authors_and_pages_by_publication_year.png", width = 5.5, height = 5, units = "in", dpi = 300)
 
 
@@ -3371,10 +3414,11 @@ g <- ggplot(data = df_plot, aes(x = publication_year, y = med)) +
         legend.box = "vertical",
         legend.direction = "horizontal")
 g
+writexl::write_xlsx(df_plot, "results/time/Corplot_authors_by_publication_year.xlsx")
 ggsave(plot = g, filename = "results/time/Corplot_authors_by_publication_year.png", width = 5.5, height = 5, units = "in", dpi = 300)
-  
 
-  
+
+
 
 # Same plot for countries
 df_country <- df %>% 
@@ -3410,6 +3454,7 @@ g <- ggplot(data = df_plot, aes(x = publication_year, y = times_cited_all_databa
         legend.text = element_text(size=20, colour = "black"),
         legend.position = "none",
         strip.text.x = element_text(size = 15))
+writexl::write_xlsx(df_plot, "results/time/Country_year.xlsx")
 ggsave(plot = g, filename = "results/time/Country_citation_year.png", width = 17, height = 12, units = "in", dpi = 300)
 
 
@@ -3449,14 +3494,14 @@ print(zz1)
 cities_to_analyse <- df_city1_sr_1[order(df_city1_sr_1$n, decreasing = TRUE),]$City[1:25]
 cities_to_analyse <- gsub("\\ \\(", "_", gsub("\\)", "", cities_to_analyse))
 cities_to_analyse <- gsub("FR", "France", 
-                           gsub("ES", "Spain", 
-                                gsub("IT", "Italy", 
-                                     gsub("BE", "Belgium", 
-                                          gsub("NL", "Netherlands", 
-                                               gsub("AU", "Australia", 
-                                                    gsub("US", "USA", 
-                                                         gsub("IE", "Ireland", 
-                                                              gsub("DE", "Germany", cities_to_analyse)))))))))
+                          gsub("ES", "Spain", 
+                               gsub("IT", "Italy", 
+                                    gsub("BE", "Belgium", 
+                                         gsub("NL", "Netherlands", 
+                                              gsub("AU", "Australia", 
+                                                   gsub("US", "USA", 
+                                                        gsub("IE", "Ireland", 
+                                                             gsub("DE", "Germany", cities_to_analyse)))))))))
 
 df_city <- df %>% 
   dplyr::select(one_of(cities_to_analyse), times_cited_all_databases, publication_year) %>%
@@ -3478,14 +3523,14 @@ df_plot$rown <- 1:nrow(df_plot)
 df_plot$City <- ifelse(str_detect(df_plot$City, "_"), as.character(paste0(df_plot$City, ")")), as.character(df_plot$City))
 df_plot$City <- ifelse(str_detect(df_plot$City, "_"), gsub("_", " (", df_plot$City), df_plot$City)
 df_plot$City <- gsub("France", "FR", 
-                           gsub("Spain", "ES", 
-                                gsub("Italy", "IT",
-                                     gsub("Belgium", "BE", 
-                                          gsub("Netherlands", "NL", 
-                                               gsub("Australia", "AU", 
-                                                    gsub("USA", "US", 
-                                                         gsub("Ireland", "IE", 
-                                                              gsub("Germany", "DE", df_plot$City)))))))))
+                     gsub("Spain", "ES", 
+                          gsub("Italy", "IT",
+                               gsub("Belgium", "BE", 
+                                    gsub("Netherlands", "NL", 
+                                         gsub("Australia", "AU", 
+                                              gsub("USA", "US", 
+                                                   gsub("Ireland", "IE", 
+                                                        gsub("Germany", "DE", df_plot$City)))))))))
 df_plot <- df_plot %>%
   dplyr::mutate(City = factor(City, levels=unique(City)))
 
@@ -3507,6 +3552,7 @@ g <- ggplot(data = df_plot, aes(x = publication_year, y = n, group = City)) +
         legend.text = element_text(size=20, colour = "black"),
         legend.position = "none",
         strip.text.x = element_text(size = 15))
+writexl::write_xlsx(df_plot, "results/time/City_year.xlsx")
 ggsave(plot = g, filename = "results/time/City_publication_year.png", width = 17, height = 12, units = "in", dpi = 300)
 
 g <- ggplot(data = df_plot, aes(x = publication_year, y = times_cited_all_databases, group = City)) +
@@ -3656,14 +3702,14 @@ write_xlsx(zz %>%
                            non_self_citations_freq_prop = round(non_self_citations_freq_prop, 1),
                            self_citation_index = round(self_citation_index, 2)) %>%
              dplyr::rename(
-  "Country" = source_country,
-  "Frequency of Domestic self citations of one country" = citations_freq,
-  "Frequency of all citations of one country" = citations_freq_sum,
-  "Proportion of Domestic self citations" = self_citations_prop,
-  "How much each country cites other countries" = non_self_citations_freq_sum2,
-  "How much each country is cited by other countries" = non_self_citations_freq_sum1,
-  "How much each country is cited by other countries normalized by how much the country cite other countries" = non_self_citations_freq_prop,
-  "Domestic Self-Citation Index" = self_citation_index), "data_export/Self-Citation_table.xlsx")
+               "Country" = source_country,
+               "Frequency of Domestic self citations of one country" = citations_freq,
+               "Frequency of all citations of one country" = citations_freq_sum,
+               "Proportion of Domestic self citations" = self_citations_prop,
+               "How much each country cites other countries" = non_self_citations_freq_sum2,
+               "How much each country is cited by other countries" = non_self_citations_freq_sum1,
+               "How much each country is cited by other countries normalized by how much the country cite other countries" = non_self_citations_freq_prop,
+               "Domestic Self-Citation Index" = self_citation_index), "data_export/Self-Citation_table.xlsx")
 
 quantile(zz$non_self_citations_freq_sum1)
 quantile(zz$non_self_citations_freq_sum2)
@@ -3694,6 +3740,7 @@ g <- ggplot(zz, aes(x = reorder(citing_country, -self_citations_prop), y = self_
         legend.text = element_text(size=14, colour = "black"),
         legend.key = element_rect(color="black"),
         legend.position = "NULL")
+writexl::write_xlsx(zz, "results/publications/Barplot_country_citation.xlsx")
 ggsave(plot = g, "results/publications/Barplot_country_citation1.png", width = 10, height = 5, units = "in", dpi = 300)
 
 g <- ggplot(zz, aes(x = reorder(citing_country, -self_citation_index), y = self_citation_index, fill = citing_country)) +
@@ -3824,15 +3871,15 @@ ycol = levels(a1$citing_country) %>%
   rename(Country=".") %>%
   full_join(ycol)
 ycol$col = ifelse(ycol$Cluster==1, "#377eb8",
-              ifelse(ycol$Cluster==2, "#4daf4a",
-                     ifelse(ycol$Cluster==3, "#e41a1c", "black")))
+                  ifelse(ycol$Cluster==2, "#4daf4a",
+                         ifelse(ycol$Cluster==3, "#e41a1c", "black")))
 
 
 # Plot
 g <- ggballoonplot(a1, x = "country.etc", y = "citing_country",
-              fill = "citations_freq1",
-              size = "citations_freq_prop1",
-              ggtheme = theme_bw()) +
+                   fill = "citations_freq1",
+                   size = "citations_freq_prop1",
+                   ggtheme = theme_bw()) +
   scale_size(range = c(1, 10), labels=c(10,20,30), breaks=c(10,20,30)) +
   scale_fill_gradient2(low = "blue", mid = "white", high = "red",
                        midpoint = 3.5,
@@ -3851,6 +3898,7 @@ g <- ggballoonplot(a1, x = "country.etc", y = "citing_country",
         legend.direction = "vertical",
         legend.box="vertical",
         legend.margin=margin())
+writexl::write_xlsx(a1, "results/publications/Balloonplot_citations_country.xlsx")
 ggsave(plot = g, filename = "results/publications/Balloonplot_citations_country.png", width = 9, height = 7, units = "in", dpi = 300)
 
 
@@ -3860,6 +3908,7 @@ dend <- hclust(dist(hc), method = "ward.D2") %>% as.dendrogram %>%
   set("labels_col", value = c("#e41a1c", "#377eb8", "#4daf4a"), k=3)
 ggd1 <- as.ggdend(dend)
 ggd1 <- ggplot(ggd1, horiz = TRUE)
+writexl::write_xlsx(hc, "results/publications/Balloonplot_citations_country_clusters1.xlsx")
 ggsave(plot = ggd1, filename = "results/publications/Balloonplot_citations_country_clusters1.png", width = 2, height = 5, units = "in", dpi = 300)
 
 
@@ -4032,5 +4081,6 @@ p <- ggballoonplot(pvalue_df_gender, y = "Author", x = "Country",
         legend.text = element_text(size=10, colour="black"),
         legend.position = "bottom", legend.direction = "horizontal", legend.box="horizontal", legend.margin=margin())
 p
+writexl::write_xlsx(pvalue_df_gender, "results/gender/Balloonplot_gender_country_authornumber.xlsx")
 ggsave(plot = p, filename = "results/gender/Balloonplot_gender_country_authornumber.png", width = 8, height = 3.5, units = "in", dpi = 300)
 
