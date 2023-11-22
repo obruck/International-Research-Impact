@@ -17,6 +17,9 @@ Image examples of the Web of Science document search process and queries are pro
 ### Population data
 National population data were downloaded from the [World Bank database](https://data.worldbank.org/indicator/SP.POP.TOTL), and municipal data from the world.cities dataset of the utils R package.
 
+### Figure data
+The Source data for publication figures can be found at `./data_export/data_for_manuscript_figures/`.
+
 
 ## INSTRUCTIONS
 
