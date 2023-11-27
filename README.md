@@ -2,8 +2,8 @@
 
 ## BACKGROUND
 These codes will help you reproduce all plots and statistical analyses of two publications  
-- **The Geographical Gap in Leading Medical Journals - a Computational Audit** by *Brück Oscar, MD PhD*  
-- **The Gender Gap in Leading Medical Journals - a Computational Audit** by *Brück Oscar, MD PhD*  
+- **A Bibliometric Analysis of Geographic Disparities in the Authorship of Leading Medical Journals** by *Brück Oscar, MD PhD*  
+- **A Bibliometric Analysis of the Gender Gap in the Authorship of Leading Medical Journals** by *Brück Oscar, MD PhD*  
 
 
 ## DATA
