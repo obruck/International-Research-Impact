@@ -2,8 +2,8 @@
 
 ## BACKGROUND
 These codes will help you reproduce all plots and statistical analyses of two publications  
-- **A Bibliometric Analysis of Geographic Disparities in the Authorship of Leading Medical Journals** by *Brück Oscar, MD PhD*  
-- **A Bibliometric Analysis of the Gender Gap in the Authorship of Leading Medical Journals** by *Brück Oscar, MD PhD*  
+- [**A Bibliometric Analysis of Geographic Disparities in the Authorship of Leading Medical Journals**](https://www.nature.com/articles/s43856-023-00418-2) by *Brück Oscar, MD PhD*  
+- [**A Bibliometric Analysis of the Gender Gap in the Authorship of Leading Medical Journals**](https://www.nature.com/articles/s43856-023-00417-3) by *Brück Oscar, MD PhD*  
 
 
 ## DATA
